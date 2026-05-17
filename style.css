@@ -608,6 +608,9 @@ a { color: inherit; text-decoration: none; }
   overflow: hidden;
   transition: all var(--transition);
 }
+.service-price .text-muted {
+  color: var(--text-secondary) !important;
+}
 .service-card:hover {
   border-color: var(--border-accent);
   box-shadow: var(--shadow-hover);
