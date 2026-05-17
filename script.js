@@ -8,19 +8,20 @@ const CATEGORIES_DB = [
   { id: 'cat-case', name: 'Chassis Frames', count: '12 Models', icon: 'bi-pc-horizontal' }
 ];
 
+// Conversions calculated at an exchange rate of 1 USD = 56 PHP
 const PRODUCTS_DB = [
-  { id: 'p1', cat: 'cat-cpu', name: 'AMD Ryzen 7 9800X3D', spec: '8 Cores / 16 Threads, 5.2GHz Turbo, Curated Gaming Cache', price: 479, label: 'Hot Allocation', emoji: '⚙️' },
-  { id: 'p2', cat: 'cat-gpu', name: 'NVIDIA RTX 5070 Ti Founders', spec: '16GB GDDR7, Next-Gen Raytracing Parallel Pipelines', price: 849, label: 'New Drop', emoji: '⚡' },
-  { id: 'p3', cat: 'cat-cpu', name: 'Intel Core Ultra 9 285K', spec: '24 Cores / 24 Threads, AI Engine Integrated Architecture', price: 589, label: 'Top Tier', emoji: '🧠' },
-  { id: 'p4', cat: 'cat-gpu', name: 'ASUS ROG Strix RTX 5090 OC', spec: '32GB GDDR7, Matrix Liquified Vapor Plate Cooling System', price: 1999, label: 'Heavy Duty', emoji: '🌌' },
-  { id: 'p5', cat: 'cat-cooler', name: 'Crow Flow Liquid AIO 360', spec: 'Infinity Mirror LCD Block, Fluid Dynamic Pressure Pumps', price: 169, label: 'Sale', emoji: '💧' },
-  { id: 'p6', cat: 'cat-case', name: 'PC CROW Neon Matrix Cube', spec: 'Panoramic Tempered Glass, Dual Chamber High Volume Airflow', price: 149, label: 'Fresh Design', emoji: '📦' }
+  { id: 'p1', cat: 'cat-cpu', name: 'AMD Ryzen 7 9800X3D', spec: '8 Cores / 16 Threads, 5.2GHz Turbo, Curated Gaming Cache', price: 26824, label: 'Hot Allocation', emoji: '⚙️' },
+  { id: 'p2', cat: 'cat-gpu', name: 'NVIDIA RTX 5070 Ti Founders', spec: '16GB GDDR7, Next-Gen Raytracing Parallel Pipelines', price: 47544, label: 'New Drop', emoji: '⚡' },
+  { id: 'p3', cat: 'cat-cpu', name: 'Intel Core Ultra 9 285K', spec: '24 Cores / 24 Threads, AI Engine Integrated Architecture', price: 32984, label: 'Top Tier', emoji: '🧠' },
+  { id: 'p4', cat: 'cat-gpu', name: 'ASUS ROG Strix RTX 5090 OC', spec: '32GB GDDR7, Matrix Liquified Vapor Plate Cooling System', price: 111944, label: 'Heavy Duty', emoji: '🌌' },
+  { id: 'p5', cat: 'cat-cooler', name: 'Crow Flow Liquid AIO 360', spec: 'Infinity Mirror LCD Block, Fluid Dynamic Pressure Pumps', price: 9464, label: 'Sale', emoji: '💧' },
+  { id: 'p6', cat: 'cat-case', name: 'PC HAVEN Neon Matrix Cube', spec: 'Panoramic Tempered Glass, Dual Chamber High Volume Airflow', price: 8344, label: 'Fresh Design', emoji: '📦' }
 ];
 
 const SERVICES_DB = [
-  { id: 'srv1', name: 'High-Fidelity Custom Build Assembly', desc: 'Complete multi-component mounting, structural alignment, structural layout testing, and optimized BIOS parameters.', price: 75, duration: '2 - 3 Hours' },
-  { id: 'srv2', name: 'Thermal Repasting & Micro-De-dusting', desc: 'Deep hardware disinfection, removal of dry interfaces, and precision application of premium phase-change pads.', price: 45, duration: '1 - 1.5 Hours' },
-  { id: 'srv3', name: 'Critical OS & Driver Diagnostics Suite', desc: 'Secure operating system fresh payload deployment, absolute latency isolation tracking, and driver configuration mapping.', price: 40, duration: '1 Hour' }
+  { id: 'srv1', name: 'High-Fidelity Custom Build Assembly', desc: 'Complete multi-component mounting, structural alignment, structural layout testing, and optimized BIOS parameters.', price: 4200, duration: '2 - 3 Hours' },
+  { id: 'srv2', name: 'Thermal Repasting & Micro-De-dusting', desc: 'Deep hardware disinfection, removal of dry interfaces, and precision application of premium phase-change pads.', price: 2520, duration: '1 - 1.5 Hours' },
+  { id: 'srv3', name: 'Critical OS & Driver Diagnostics Suite', desc: 'Secure operating system fresh payload deployment, absolute latency isolation tracking, and driver configuration mapping.', price: 2240, duration: '1 Hour' }
 ];
 
 const TRUST_DB = [
@@ -30,7 +31,7 @@ const TRUST_DB = [
 ];
 
 const TESTIMONIALS_DB = [
-  { text: "PC CROW field technicians updated my thermal throttling workstations within hours. Incredible client response.", author: "Marcus V.", role: "Lead Dev Operations" },
+  { text: "PC HAVEN field technicians updated my thermal throttling workstations within hours. Incredible client response.", author: "Marcus V.", role: "Lead Dev Operations" },
   { text: "Secured my RTX 5090 drop allocation completely hassle-free. The separated front-end system tracking is blazing fast.", author: "Sarah K.", role: "Digital Render Engineer" }
 ];
 
@@ -42,7 +43,7 @@ let activeCategoryFilter = 'all';
 // Theme Control System Engine
 const ThemeEngine = {
   init() {
-    const cached = localStorage.getItem('pccrow_theme') || 'dark';
+    const cached = localStorage.getItem('pchaven_theme') || 'dark';
     document.documentElement.setAttribute('data-theme', cached);
     this.updateIcon(cached);
   },
@@ -50,7 +51,7 @@ const ThemeEngine = {
     const current = document.documentElement.getAttribute('data-theme');
     const target = current === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', target);
-    localStorage.setItem('pccrow_theme', target);
+    localStorage.setItem('pchaven_theme', target);
     this.updateIcon(target);
     ToastSystem.trigger(`Theme adapted to ${target} interface protocol`, '🌓');
   },
@@ -68,10 +69,10 @@ const ThemeEngine = {
 // Client Storage Local Cart Manager API
 const CartManager = {
   getItems() {
-    return JSON.parse(localStorage.getItem('pccrow_cart') || '[]');
+    return JSON.parse(localStorage.getItem('pchaven_cart') || '[]');
   },
   saveItems(cart) {
-    localStorage.setItem('pccrow_cart', JSON.stringify(cart));
+    localStorage.setItem('pchaven_cart', JSON.stringify(cart));
     this.syncBadge();
     this.renderDrawer();
   },
@@ -112,7 +113,7 @@ const CartManager = {
     const cart = this.getItems();
     if (cart.length === 0) {
       container.innerHTML = `<div class="text-center py-5 text-muted small"><i class="bi bi-cpu fs-3 d-block mb-2"></i>No hardware allocations registered.</div>`;
-      subtotalEl.textContent = '$0';
+      subtotalEl.textContent = '₱0';
       return;
     }
 
@@ -124,7 +125,7 @@ const CartManager = {
         <div class="cart-item">
           <div class="cart-item-info">
             <span class="cart-item-name">${item.emoji} ${item.name}</span>
-            <span class="cart-item-price">$${item.price} <span class="text-muted small">x${item.qty}</span></span>
+            <span class="cart-item-price">₱${item.price.toLocaleString()} <span class="text-muted small">x${item.qty}</span></span>
           </div>
           <button class="cart-remove-btn" onclick="CartManager.removeItem('${item.id}')" title="Remove Item">
             <i class="bi bi-trash3-fill"></i>
@@ -133,7 +134,7 @@ const CartManager = {
       `;
     });
     container.innerHTML = html;
-    subtotalEl.textContent = `$${subtotal}`;
+    subtotalEl.textContent = `₱${subtotal.toLocaleString()}`;
   },
   checkout() {
     const cart = this.getItems();
@@ -141,7 +142,7 @@ const CartManager = {
       ToastSystem.trigger('Cart node clear. Add components first.', '⚠️');
       return;
     }
-    alert('PC CROW Front-End Simulator: Purchase sequence initialized. Clearing local state matrix.');
+    alert('PC HAVEN Front-End Simulator: Purchase sequence initialized. Clearing local state matrix.');
     this.saveItems([]);
     document.getElementById('cartDrawer').classList.remove('open');
     document.getElementById('cartOverlay').classList.remove('open');
@@ -219,7 +220,7 @@ function renderAllComponents() {
               <h4 class="product-name">${p.name}</h4>
               <p class="product-spec text-truncate-2">${p.spec}</p>
               <div class="product-footer">
-                <span class="product-price">$${p.price}</span>
+                <span class="product-price">₱${p.price.toLocaleString()}</span>
                 <button class="btn-add-cart" onclick="CartManager.addItem('${p.id}', '${p.name}', ${p.price}, '${p.emoji}')">
                   <i class="bi bi-plus-lg"></i> Allocate
                 </button>
@@ -241,7 +242,7 @@ function renderAllComponents() {
           <h4 class="service-name">${s.name}</h4>
           <p class="service-desc">${s.desc}</p>
           <div class="service-meta">
-            <span class="service-price">$${s.price} <span class="text-muted small">/ Base</span></span>
+            <span class="service-price">₱${s.price.toLocaleString()} <span class="text-muted small">/ Base</span></span>
             <button class="btn-book-service" onclick="openBookingDialogue('${s.name}')">Request Node</button>
           </div>
         </div>
@@ -291,6 +292,14 @@ function renderAllComponents() {
 function setProductFilter(catId) {
   activeCategoryFilter = catId;
   renderAllComponents();
+  
+  // FIXED NAVIGATION BAR ORANGE HIGHLIGHT SWITCH LOGIC
+  document.querySelectorAll('#filter-tabs .filter-tab-btn').forEach(btn => {
+     btn.classList.remove('active');
+  });
+  const activeBtn = Array.from(document.querySelectorAll('#filter-tabs .filter-tab-btn')).find(btn => btn.getAttribute('onclick').includes(catId));
+  if(activeBtn) activeBtn.classList.add('active');
+
   const targetElement = document.getElementById('featured');
   if(targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
 }
@@ -321,11 +330,10 @@ function initTickerSystem() {
   const element = document.getElementById('ticker-content');
   if (!element) return;
   const messaging = [
-    "⚡ PC CROW STOCK ALERT: AMD RYZEN 7 9800X3D ALLOCATIONS ALLOTTED IN QUANTITY POOLS",
+    "⚡ PC HAVEN STOCK ALERT: AMD RYZEN 7 9800X3D ALLOCATIONS ALLOTTED IN QUANTITY POOLS",
     "🛡️ EXPERT ON-SITE DIAGNOSTIC DISPATCH WORKFORCE RUNNING ACTIVE OPS METRIC",
     "🔥 EXCLUSIVE INTEL ULTRA GENERATION CORE TRAFFIC RE-ROUTED CLIENT DISPATCHES OPEN"
   ];
-  // Duplicate array content to form endless carousel effect stream loop
   element.innerHTML = [...messaging, ...messaging].map(m => `<span>${m}</span>`).join('');
 }
 
@@ -339,7 +347,7 @@ function runPromoTimer() {
     seconds--;
     if (seconds < 0) { seconds = 59; minutes--; }
     if (minutes < 0) { minutes = 59; hours--; }
-    if (hours < 0) { hours = 24; } // Endless rotation loop mimic 
+    if (hours < 0) { hours = 24; } 
 
     container.innerHTML = `
       <div class="countdown-unit"><span class="countdown-num">${String(hours).padStart(2, '0')}</span><span class="countdown-label">HR</span></div>
@@ -359,7 +367,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initTickerSystem();
   runPromoTimer();
 
-  // Navigation Scrolling Effects listeners
   window.addEventListener('scroll', () => {
     const nav = document.getElementById('mainNav');
     if (window.scrollY > 40) {
@@ -369,7 +376,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Drawer Toggle Interactivity bindings
+  // Dynamic Navigation highlighters for the structural page anchors
+  const navLinks = document.querySelectorAll('#mainNav .nav-link');
+  navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      navLinks.forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
   const cartToggle = document.getElementById('cartToggleBtn');
   const cartClose = document.getElementById('cartCloseBtn');
   const cartOverlay = document.getElementById('cartOverlay');
@@ -391,6 +406,5 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cartClose) cartClose.addEventListener('click', closeCartAction);
   if (cartOverlay) cartOverlay.addEventListener('click', closeCartAction);
 
-  // Bind Light/Dark theme toggle control element switch actions
   document.getElementById('themeToggle')?.addEventListener('click', () => ThemeEngine.toggle());
 });
