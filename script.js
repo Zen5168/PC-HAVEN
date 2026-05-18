@@ -1005,11 +1005,14 @@ function updateUserSection() {
       // Mobile User Section
       if (mobileUserSection) {
         mobileUserSection.innerHTML = `
-          <div class="mobile-user-card">
-            <div class="mobile-user-avatar">${user.name.charAt(0).toUpperCase()}</div>
-            <div class="mobile-user-info">
-              <div class="mobile-user-name">${user.name}</div>
-              <div class="mobile-user-email">${user.email}</div>
+          <div class="mobile-user-info-section">
+            <div class="mobile-user-info-item">
+              <i class="bi bi-person-circle"></i>
+              <span>${user.name}</span>
+            </div>
+            <div class="mobile-user-info-item">
+              <i class="bi bi-envelope"></i>
+              <span>${user.email}</span>
             </div>
           </div>
           <div class="mobile-menu-section">
