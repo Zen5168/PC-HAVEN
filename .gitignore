@@ -1,0 +1,107 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+.vs/
+*.code-workspace
+
+# Documentation Files (Not needed for deployment)
+README.md
+FEATURES.md
+SETUP.md
+CHANGELOG.md
+COMPATIBILITY_GUIDE.md
+AUTH_SYSTEM_README.md
+CONTRIBUTING.md
+GITHUB_SETUP.md
+PRE_PUSH_CHECKLIST.md
+DEPLOYMENT_FILES.txt
+LICENSE
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Logs
+logs/
+*.log
+
+# Environment Variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env*.local
+
+# Build Output
+dist/
+build/
+*.min.js
+*.min.css
+out/
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+*.bak
+*.cache
+
+# Backup Files
+*.backup
+*~
+*.orig
+
+# Test Coverage
+coverage/
+.nyc_output/
+
+# Dependencies
+bower_components/
+
+# Miscellaneous
+*.diff
+*.err
+*.rej
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# macOS
+.AppleDouble
+.LSOverride
+Icon
+
+# Windows
+Thumbs.db:encryptable
+ehthumbs_vista.db
+*.stackdump
+
+# Linux
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*

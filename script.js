@@ -1,22 +1,85 @@
 /* ============================================================
-   MOCK DATABASES & SYSTEM REGISTER
+   INVENTORY DATA & SYSTEM REGISTER
 ============================================================ */
-const CATEGORIES_DB = [
-  { id: 'cat-cpu', name: 'Processors', count: '14 Models', icon: 'bi-cpu' },
-  { id: 'cat-gpu', name: 'Graphics Cards', count: '18 Models', icon: 'bi-gpu-card' },
-  { id: 'cat-cooler', name: 'Liquid Cooling', count: '9 Models', icon: 'bi-water' },
-  { id: 'cat-case', name: 'Chassis Frames', count: '12 Models', icon: 'bi-pc-horizontal' }
-];
+let CATEGORIES_DB = [];
+let PRODUCTS_DB = [];
 
-// Conversions calculated at an exchange rate of 1 USD = 56 PHP
-const PRODUCTS_DB = [
-  { id: 'p1', cat: 'cat-cpu', name: 'AMD Ryzen 7 9800X3D', spec: '8 Cores / 16 Threads, 5.2GHz Turbo, Curated Gaming Cache', price: 26824, label: 'Hot Allocation', emoji: '⚙️' },
-  { id: 'p2', cat: 'cat-gpu', name: 'NVIDIA RTX 5070 Ti Founders', spec: '16GB GDDR7, Next-Gen Raytracing Parallel Pipelines', price: 47544, label: 'New Drop', emoji: '⚡' },
-  { id: 'p3', cat: 'cat-cpu', name: 'Intel Core Ultra 9 285K', spec: '24 Cores / 24 Threads, AI Engine Integrated Architecture', price: 32984, label: 'Top Tier', emoji: '🧠' },
-  { id: 'p4', cat: 'cat-gpu', name: 'ASUS ROG Strix RTX 5090 OC', spec: '32GB GDDR7, Matrix Liquified Vapor Plate Cooling System', price: 111944, label: 'Heavy Duty', emoji: '🌌' },
-  { id: 'p5', cat: 'cat-cooler', name: 'Crow Flow Liquid AIO 360', spec: 'Infinity Mirror LCD Block, Fluid Dynamic Pressure Pumps', price: 9464, label: 'Sale', emoji: '💧' },
-  { id: 'p6', cat: 'cat-case', name: 'PC HAVEN Neon Matrix Cube', spec: 'Panoramic Tempered Glass, Dual Chamber High Volume Airflow', price: 8344, label: 'Fresh Design', emoji: '📦' }
-];
+// Embedded inventory data (fallback for local file access)
+const EMBEDDED_INVENTORY = {
+  "categories": [
+    { "id": "cat-cpu", "name": "Processors", "icon": "bi-cpu" },
+    { "id": "cat-gpu", "name": "Graphics Cards", "icon": "bi-gpu-card" },
+    { "id": "cat-ram", "name": "Memory (RAM)", "icon": "bi-memory" },
+    { "id": "cat-mobo", "name": "Motherboards", "icon": "bi-motherboard" },
+    { "id": "cat-storage", "name": "Storage", "icon": "bi-device-ssd" },
+    { "id": "cat-psu", "name": "Power Supply", "icon": "bi-lightning-charge" },
+    { "id": "cat-case", "name": "Cases", "icon": "bi-pc-horizontal" },
+    { "id": "cat-cooler", "name": "Cooling", "icon": "bi-water" }
+  ],
+  "products": [
+    { "id": "cpu-1", "cat": "cat-cpu", "name": "AMD Ryzen 9 9950X", "spec": "16 Cores / 32 Threads, 5.7GHz Boost, 80MB Cache", "price": 33600, "stock": 15, "label": "Top Tier", "emoji": "🔥" },
+    { "id": "cpu-2", "cat": "cat-cpu", "name": "AMD Ryzen 7 9800X3D", "spec": "8 Cores / 16 Threads, 5.2GHz Turbo, 3D V-Cache", "price": 26824, "stock": 22, "label": "Hot Allocation", "emoji": "⚙️" },
+    { "id": "cpu-3", "cat": "cat-cpu", "name": "Intel Core Ultra 9 285K", "spec": "24 Cores / 24 Threads, AI Engine Integrated", "price": 32984, "stock": 18, "label": "New Drop", "emoji": "🧠" },
+    { "id": "cpu-4", "cat": "cat-cpu", "name": "Intel Core i9-14900K", "spec": "24 Cores / 32 Threads, 6.0GHz Turbo", "price": 30800, "stock": 20, "label": "Popular", "emoji": "⚡" },
+    { "id": "cpu-5", "cat": "cat-cpu", "name": "AMD Ryzen 5 7600X", "spec": "6 Cores / 12 Threads, 5.3GHz Boost", "price": 11200, "stock": 35, "label": "Budget King", "emoji": "💰" },
+    { "id": "gpu-1", "cat": "cat-gpu", "name": "NVIDIA RTX 5090 Founders", "spec": "32GB GDDR7, Next-Gen Ray Tracing", "price": 111944, "stock": 8, "label": "Ultimate", "emoji": "🌌" },
+    { "id": "gpu-2", "cat": "cat-gpu", "name": "ASUS ROG Strix RTX 5090 OC", "spec": "32GB GDDR7, Liquid Vapor Chamber Cooling", "price": 125440, "stock": 5, "label": "Heavy Duty", "emoji": "👑" },
+    { "id": "gpu-3", "cat": "cat-gpu", "name": "NVIDIA RTX 5070 Ti Founders", "spec": "16GB GDDR7, DLSS 4.0 Support", "price": 47544, "stock": 25, "label": "New Drop", "emoji": "⚡" },
+    { "id": "gpu-4", "cat": "cat-gpu", "name": "AMD Radeon RX 7900 XTX", "spec": "24GB GDDR6, Chiplet Architecture", "price": 44800, "stock": 18, "label": "AMD Power", "emoji": "🔴" },
+    { "id": "gpu-5", "cat": "cat-gpu", "name": "NVIDIA RTX 4070 Super", "spec": "12GB GDDR6X, Ray Tracing Cores", "price": 33600, "stock": 30, "label": "Best Value", "emoji": "💎" },
+    { "id": "gpu-6", "cat": "cat-gpu", "name": "AMD Radeon RX 7800 XT", "spec": "16GB GDDR6, 1440p Gaming Beast", "price": 28000, "stock": 22, "label": "Popular", "emoji": "🎮" },
+    { "id": "ram-1", "cat": "cat-ram", "name": "G.SKILL Trident Z5 RGB 64GB", "spec": "DDR5-7200, CL34, 2x32GB Kit", "price": 16800, "stock": 40, "label": "Premium", "emoji": "💾" },
+    { "id": "ram-2", "cat": "cat-ram", "name": "Corsair Dominator Platinum 32GB", "spec": "DDR5-6400, CL32, 2x16GB Kit", "price": 11200, "stock": 50, "label": "Popular", "emoji": "⚡" },
+    { "id": "ram-3", "cat": "cat-ram", "name": "Kingston Fury Beast 32GB", "spec": "DDR5-6000, CL36, 2x16GB Kit", "price": 8400, "stock": 60, "label": "Best Value", "emoji": "💰" },
+    { "id": "ram-4", "cat": "cat-ram", "name": "Corsair Vengeance RGB 64GB", "spec": "DDR5-5600, CL40, 2x32GB Kit", "price": 13440, "stock": 35, "label": "RGB", "emoji": "🌈" },
+    { "id": "mobo-1", "cat": "cat-mobo", "name": "ASUS ROG Maximus Z890 Hero", "spec": "Intel Z890, DDR5, PCIe 5.0, WiFi 7", "price": 33600, "stock": 12, "label": "Flagship", "emoji": "👑" },
+    { "id": "mobo-2", "cat": "cat-mobo", "name": "MSI MAG X870 Tomahawk", "spec": "AMD X870, DDR5, PCIe 5.0, WiFi 7", "price": 22400, "stock": 20, "label": "Popular", "emoji": "🎯" },
+    { "id": "mobo-3", "cat": "cat-mobo", "name": "Gigabyte B650 AORUS Elite", "spec": "AMD B650, DDR5, PCIe 4.0, WiFi 6E", "price": 11200, "stock": 30, "label": "Budget", "emoji": "💰" },
+    { "id": "mobo-4", "cat": "cat-mobo", "name": "ASRock X870E Taichi", "spec": "AMD X870E, DDR5, PCIe 5.0, 10GbE LAN", "price": 28000, "stock": 15, "label": "Premium", "emoji": "⚡" },
+    { "id": "storage-1", "cat": "cat-storage", "name": "Samsung 990 PRO 2TB", "spec": "NVMe Gen4, 7450MB/s Read, 6900MB/s Write", "price": 8960, "stock": 45, "label": "Top Rated", "emoji": "💿" },
+    { "id": "storage-2", "cat": "cat-storage", "name": "WD Black SN850X 4TB", "spec": "NVMe Gen4, 7300MB/s Read, Gaming Optimized", "price": 16800, "stock": 25, "label": "Gaming", "emoji": "🎮" },
+    { "id": "storage-3", "cat": "cat-storage", "name": "Crucial P5 Plus 1TB", "spec": "NVMe Gen4, 6600MB/s Read, 5000MB/s Write", "price": 4480, "stock": 60, "label": "Budget", "emoji": "💰" },
+    { "id": "storage-4", "cat": "cat-storage", "name": "Seagate FireCuda 530 2TB", "spec": "NVMe Gen4, 7300MB/s, Heatsink Included", "price": 11200, "stock": 30, "label": "Hot", "emoji": "🔥" },
+    { "id": "psu-1", "cat": "cat-psu", "name": "Corsair HX1500i 1500W", "spec": "80+ Platinum, Fully Modular, Digital Monitoring", "price": 22400, "stock": 10, "label": "Extreme", "emoji": "⚡" },
+    { "id": "psu-2", "cat": "cat-psu", "name": "Seasonic PRIME TX-1000", "spec": "80+ Titanium, 1000W, Fully Modular", "price": 16800, "stock": 15, "label": "Premium", "emoji": "👑" },
+    { "id": "psu-3", "cat": "cat-psu", "name": "EVGA SuperNOVA 850 G7", "spec": "80+ Gold, 850W, Fully Modular", "price": 8960, "stock": 35, "label": "Popular", "emoji": "💎" },
+    { "id": "psu-4", "cat": "cat-psu", "name": "Thermaltake Toughpower GF3 750W", "spec": "80+ Gold, 750W, Fully Modular", "price": 6720, "stock": 40, "label": "Value", "emoji": "💰" },
+    { "id": "case-1", "cat": "cat-case", "name": "Lian Li O11 Dynamic EVO", "spec": "Mid Tower, Tempered Glass, Dual Chamber", "price": 8960, "stock": 25, "label": "Popular", "emoji": "📦" },
+    { "id": "case-2", "cat": "cat-case", "name": "Fractal Design Torrent", "spec": "Mid Tower, High Airflow, 2x 180mm Fans", "price": 11200, "stock": 20, "label": "Airflow King", "emoji": "🌪️" },
+    { "id": "case-3", "cat": "cat-case", "name": "NZXT H9 Elite", "spec": "Mid Tower, Dual Chamber, Cable Management", "price": 10080, "stock": 18, "label": "Premium", "emoji": "✨" },
+    { "id": "case-4", "cat": "cat-case", "name": "Corsair 4000D Airflow", "spec": "Mid Tower, High Airflow, Budget Friendly", "price": 5600, "stock": 45, "label": "Best Value", "emoji": "💰" },
+    { "id": "case-5", "cat": "cat-case", "name": "PC HAVEN Neon Matrix Cube", "spec": "Panoramic Glass, RGB Lighting, Premium Build", "price": 8344, "stock": 30, "label": "Fresh Design", "emoji": "🎨" },
+    { "id": "cooler-1", "cat": "cat-cooler", "name": "NZXT Kraken Elite 360 RGB", "spec": "360mm AIO, LCD Display, RGB Fans", "price": 15680, "stock": 20, "label": "Premium", "emoji": "❄️" },
+    { "id": "cooler-2", "cat": "cat-cooler", "name": "Crow Flow Liquid AIO 360", "spec": "360mm, Infinity Mirror LCD, Dynamic Pumps", "price": 9464, "stock": 25, "label": "Sale", "emoji": "💧" },
+    { "id": "cooler-3", "cat": "cat-cooler", "name": "Arctic Liquid Freezer II 280", "spec": "280mm AIO, VRM Fan, Silent Operation", "price": 6720, "stock": 35, "label": "Best Value", "emoji": "🧊" },
+    { "id": "cooler-4", "cat": "cat-cooler", "name": "Noctua NH-D15 chromax.black", "spec": "Dual Tower Air Cooler, Premium Fans", "price": 6160, "stock": 40, "label": "Air Cooling", "emoji": "🌬️" },
+    { "id": "cooler-5", "cat": "cat-cooler", "name": "Corsair iCUE H150i Elite", "spec": "360mm AIO, RGB Lighting, Zero RPM Mode", "price": 11200, "stock": 22, "label": "RGB", "emoji": "🌈" }
+  ]
+};
+
+// Load inventory from JSON file or use embedded data
+async function loadInventory() {
+  try {
+    const response = await fetch('inventory.json');
+    const data = await response.json();
+    CATEGORIES_DB = data.categories;
+    PRODUCTS_DB = data.products;
+    console.log('✅ Inventory loaded from JSON file');
+  } catch (error) {
+    console.warn('⚠️ Could not load inventory.json, using embedded data:', error.message);
+    // Fallback to embedded data
+    CATEGORIES_DB = EMBEDDED_INVENTORY.categories;
+    PRODUCTS_DB = EMBEDDED_INVENTORY.products;
+  }
+  
+  // Update category counts
+  CATEGORIES_DB.forEach(cat => {
+    const count = PRODUCTS_DB.filter(p => p.cat === cat.id).length;
+    cat.count = `${count} Models`;
+  });
+  
+  return true;
+}
 
 const SERVICES_DB = [
   { id: 'srv1', name: 'High-Fidelity Custom Build Assembly', desc: 'Complete multi-component mounting, structural alignment, structural layout testing, and optimized BIOS parameters.', price: 4200, duration: '2 - 3 Hours' },
@@ -39,6 +102,414 @@ const TESTIMONIALS_DB = [
    CLIENT CONTAINER STATS & ACTIVE APP STATES
 ============================================================ */
 let activeCategoryFilter = 'all';
+let activeBuilderCategory = null;
+
+// PC Builder State Management
+const PCBuilder = {
+  selectedComponents: {},
+  
+  init() {
+    this.loadBuild();
+    this.renderCategories();
+  },
+  
+  selectCategory(catId) {
+    activeBuilderCategory = catId;
+    this.renderCategories();
+    this.renderComponents(catId);
+  },
+  
+  renderCategories() {
+    const container = document.getElementById('builderCategories');
+    if (!container) return;
+    
+    container.innerHTML = CATEGORIES_DB.map(cat => {
+      const isSelected = this.selectedComponents[cat.id];
+      const isActive = activeBuilderCategory === cat.id;
+      return `
+        <div class="builder-cat-item ${isActive ? 'active' : ''} ${isSelected ? 'selected' : ''}" 
+             onclick="PCBuilder.selectCategory('${cat.id}')">
+          <i class="bi ${cat.icon}"></i>
+          <span>${cat.name}</span>
+          ${isSelected ? '<i class="bi bi-check-circle-fill check-icon"></i>' : ''}
+        </div>
+      `;
+    }).join('');
+  },
+  
+  renderComponents(catId) {
+    const container = document.getElementById('builderComponents');
+    if (!container) return;
+    
+    const products = PRODUCTS_DB.filter(p => p.cat === catId);
+    const category = CATEGORIES_DB.find(c => c.id === catId);
+    
+    if (products.length === 0) {
+      container.innerHTML = '<div class="text-center text-muted py-4">No components available</div>';
+      return;
+    }
+    
+    container.innerHTML = `
+      <div class="builder-components-header">
+        <h5><i class="bi ${category.icon}"></i> Select ${category.name}</h5>
+      </div>
+      <div class="builder-components-grid">
+        ${products.map(p => {
+          const isSelected = this.selectedComponents[catId]?.id === p.id;
+          const compatibility = this.checkComponentCompatibility(catId, p);
+          const hasWarning = compatibility.warnings.length > 0;
+          
+          return `
+            <div class="builder-component-card ${isSelected ? 'selected' : ''} ${p.stock === 0 ? 'out-of-stock' : ''} ${hasWarning ? 'has-warning' : ''}" 
+                 onclick="PCBuilder.selectComponent('${catId}', '${p.id}')">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div class="component-emoji">${p.emoji}</div>
+                <div class="d-flex gap-1">
+                  ${hasWarning ? '<i class="bi bi-exclamation-triangle-fill text-warning" title="Compatibility warning"></i>' : ''}
+                  ${isSelected ? '<i class="bi bi-check-circle-fill text-success"></i>' : ''}
+                </div>
+              </div>
+              <h6 class="component-name">${p.name}</h6>
+              <p class="component-spec">${p.spec}</p>
+              ${hasWarning ? `<div class="component-warning"><i class="bi bi-info-circle"></i> ${compatibility.warnings[0]}</div>` : ''}
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="component-price">₱${p.price.toLocaleString()}</span>
+                <span class="component-stock ${p.stock < 10 ? 'low' : ''}">${p.stock} in stock</span>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  },
+  
+  checkComponentCompatibility(catId, product) {
+    const warnings = [];
+    const cpu = this.selectedComponents['cat-cpu'];
+    const mobo = this.selectedComponents['cat-mobo'];
+    const gpu = this.selectedComponents['cat-gpu'];
+    const psu = this.selectedComponents['cat-psu'];
+    const cooler = this.selectedComponents['cat-cooler'];
+    const caseItem = this.selectedComponents['cat-case'];
+    
+    // Check motherboard compatibility with CPU
+    if (catId === 'cat-mobo' && cpu) {
+      const isAMD = cpu.name.includes('AMD') || cpu.name.includes('Ryzen');
+      const isIntel = cpu.name.includes('Intel') || cpu.name.includes('Core');
+      const moboAMD = product.name.includes('X870') || product.name.includes('B650') || product.name.includes('X870E');
+      const moboIntel = product.name.includes('Z890') || product.name.includes('Z790');
+      
+      if (isAMD && moboIntel) {
+        warnings.push('Incompatible: AMD CPU needs AMD motherboard');
+      } else if (isIntel && moboAMD) {
+        warnings.push('Incompatible: Intel CPU needs Intel motherboard');
+      }
+    }
+    
+    // Check CPU compatibility with motherboard
+    if (catId === 'cat-cpu' && mobo) {
+      const isAMD = product.name.includes('AMD') || product.name.includes('Ryzen');
+      const isIntel = product.name.includes('Intel') || product.name.includes('Core');
+      const moboAMD = mobo.name.includes('X870') || mobo.name.includes('B650') || mobo.name.includes('X870E');
+      const moboIntel = mobo.name.includes('Z890') || mobo.name.includes('Z790');
+      
+      if (isAMD && moboIntel) {
+        warnings.push('Incompatible: AMD CPU needs AMD motherboard');
+      } else if (isIntel && moboAMD) {
+        warnings.push('Incompatible: Intel CPU needs Intel motherboard');
+      }
+    }
+    
+    // Check PSU wattage for high-end GPUs
+    if (catId === 'cat-psu' && gpu) {
+      const wattageMatch = product.name.match(/(\d+)W/);
+      const wattage = wattageMatch ? parseInt(wattageMatch[1]) : 0;
+      
+      if (gpu.name.includes('5090') && wattage < 1000) {
+        warnings.push('Warning: RTX 5090 recommended 1000W+ PSU');
+      } else if ((gpu.name.includes('5080') || gpu.name.includes('7900')) && wattage < 850) {
+        warnings.push('Warning: High-end GPU recommended 850W+ PSU');
+      }
+    }
+    
+    // Check GPU power requirements
+    if (catId === 'cat-gpu' && psu) {
+      const wattageMatch = psu.name.match(/(\d+)W/);
+      const wattage = wattageMatch ? parseInt(wattageMatch[1]) : 0;
+      
+      if (product.name.includes('5090') && wattage < 1000) {
+        warnings.push('Warning: This GPU needs 1000W+ PSU');
+      } else if ((product.name.includes('5080') || product.name.includes('7900')) && wattage < 850) {
+        warnings.push('Warning: This GPU needs 850W+ PSU');
+      }
+    }
+    
+    // Check cooler compatibility with case
+    if (catId === 'cat-cooler' && caseItem) {
+      const is360AIO = product.name.includes('360');
+      const is280AIO = product.name.includes('280');
+      const isSmallCase = caseItem.name.includes('Compact') || caseItem.name.includes('Mini');
+      
+      if ((is360AIO || is280AIO) && isSmallCase) {
+        warnings.push('Warning: Large AIO may not fit in compact case');
+      }
+    }
+    
+    // Check case size for cooler
+    if (catId === 'cat-case' && cooler) {
+      const is360AIO = cooler.name.includes('360');
+      const is280AIO = cooler.name.includes('280');
+      const isSmallCase = product.name.includes('Compact') || product.name.includes('Mini');
+      
+      if ((is360AIO || is280AIO) && isSmallCase) {
+        warnings.push('Warning: May not fit large AIO coolers');
+      }
+    }
+    
+    return { compatible: warnings.length === 0, warnings };
+  },
+  
+  selectComponent(catId, productId) {
+    const product = PRODUCTS_DB.find(p => p.id === productId);
+    if (!product || product.stock === 0) return;
+    
+    this.selectedComponents[catId] = product;
+    this.saveBuild();
+    this.renderCategories();
+    this.renderComponents(catId);
+    this.updateSummary();
+    this.checkBuildCompatibility();
+    ToastSystem.trigger(`${product.name} added to build`, product.emoji);
+  },
+  
+  checkBuildCompatibility() {
+    const warningsContainer = document.getElementById('compatibilityWarnings');
+    if (!warningsContainer) return;
+    
+    const allWarnings = [];
+    const cpu = this.selectedComponents['cat-cpu'];
+    const mobo = this.selectedComponents['cat-mobo'];
+    const gpu = this.selectedComponents['cat-gpu'];
+    const psu = this.selectedComponents['cat-psu'];
+    const ram = this.selectedComponents['cat-ram'];
+    const cooler = this.selectedComponents['cat-cooler'];
+    const caseItem = this.selectedComponents['cat-case'];
+    
+    // CPU and Motherboard compatibility
+    if (cpu && mobo) {
+      const isAMDCPU = cpu.name.includes('AMD') || cpu.name.includes('Ryzen');
+      const isIntelCPU = cpu.name.includes('Intel') || cpu.name.includes('Core');
+      const isAMDMobo = mobo.name.includes('X870') || mobo.name.includes('B650') || mobo.name.includes('X870E');
+      const isIntelMobo = mobo.name.includes('Z890') || mobo.name.includes('Z790');
+      
+      if ((isAMDCPU && isIntelMobo) || (isIntelCPU && isAMDMobo)) {
+        allWarnings.push({
+          type: 'error',
+          icon: 'bi-x-circle-fill',
+          message: 'CPU and Motherboard are incompatible! AMD CPUs need AMD motherboards, Intel CPUs need Intel motherboards.'
+        });
+      }
+    }
+    
+    // GPU and PSU compatibility
+    if (gpu && psu) {
+      const wattageMatch = psu.name.match(/(\d+)W/);
+      const wattage = wattageMatch ? parseInt(wattageMatch[1]) : 0;
+      
+      if (gpu.name.includes('5090') && wattage < 1000) {
+        allWarnings.push({
+          type: 'warning',
+          icon: 'bi-exclamation-triangle-fill',
+          message: 'RTX 5090 requires at least 1000W PSU. Current PSU may be insufficient.'
+        });
+      } else if ((gpu.name.includes('5080') || gpu.name.includes('5070') || gpu.name.includes('7900')) && wattage < 850) {
+        allWarnings.push({
+          type: 'warning',
+          icon: 'bi-exclamation-triangle-fill',
+          message: 'High-end GPU recommended 850W+ PSU for optimal performance.'
+        });
+      }
+    }
+    
+    // Cooler and Case compatibility
+    if (cooler && caseItem) {
+      const is360AIO = cooler.name.includes('360');
+      const is280AIO = cooler.name.includes('280');
+      const isSmallCase = caseItem.name.includes('Compact') || caseItem.name.includes('Mini');
+      
+      if ((is360AIO || is280AIO) && isSmallCase) {
+        allWarnings.push({
+          type: 'warning',
+          icon: 'bi-exclamation-triangle-fill',
+          message: 'Large AIO cooler may not fit in compact case. Verify case specifications.'
+        });
+      }
+    }
+    
+    // Missing essential components
+    const essentialComponents = [
+      { id: 'cat-cpu', name: 'Processor' },
+      { id: 'cat-mobo', name: 'Motherboard' },
+      { id: 'cat-ram', name: 'RAM' },
+      { id: 'cat-storage', name: 'Storage' },
+      { id: 'cat-psu', name: 'Power Supply' }
+    ];
+    
+    const missingComponents = essentialComponents.filter(comp => !this.selectedComponents[comp.id]);
+    
+    if (missingComponents.length > 0 && Object.keys(this.selectedComponents).length > 0) {
+      allWarnings.push({
+        type: 'info',
+        icon: 'bi-info-circle-fill',
+        message: `Missing essential components: ${missingComponents.map(c => c.name).join(', ')}`
+      });
+    }
+    
+    // Display warnings
+    if (allWarnings.length > 0) {
+      warningsContainer.style.display = 'block';
+      warningsContainer.innerHTML = allWarnings.map(w => `
+        <div class="compatibility-alert compatibility-${w.type}">
+          <i class="bi ${w.icon}"></i>
+          <span>${w.message}</span>
+        </div>
+      `).join('');
+    } else if (Object.keys(this.selectedComponents).length > 0) {
+      warningsContainer.style.display = 'block';
+      warningsContainer.innerHTML = `
+        <div class="compatibility-alert compatibility-success">
+          <i class="bi bi-check-circle-fill"></i>
+          <span>All components are compatible! ✓</span>
+        </div>
+      `;
+    } else {
+      warningsContainer.style.display = 'none';
+    }
+  },
+  
+  updateSummary() {
+    const summaryBody = document.getElementById('buildSummary');
+    const totalPriceEl = document.getElementById('buildTotalPrice');
+    const addBtn = document.getElementById('addBuildToCartBtn');
+    
+    if (!summaryBody || !totalPriceEl) return;
+    
+    const components = Object.values(this.selectedComponents);
+    
+    if (components.length === 0) {
+      summaryBody.innerHTML = `
+        <div class="text-center text-muted py-4">
+          <i class="bi bi-cpu fs-3 d-block mb-2"></i>
+          <small>Start selecting components</small>
+        </div>
+      `;
+      totalPriceEl.textContent = '₱0';
+      if (addBtn) addBtn.disabled = true;
+      return;
+    }
+    
+    const total = components.reduce((sum, comp) => sum + comp.price, 0);
+    
+    summaryBody.innerHTML = components.map(comp => {
+      const category = CATEGORIES_DB.find(c => c.id === comp.cat);
+      return `
+        <div class="build-summary-item">
+          <div class="build-summary-item-header">
+            <span class="build-summary-cat">${category.name}</span>
+            <button class="build-summary-remove" onclick="PCBuilder.removeComponent('${comp.cat}')" title="Remove">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+          <div class="build-summary-item-name">${comp.emoji} ${comp.name}</div>
+          <div class="build-summary-item-price">₱${comp.price.toLocaleString()}</div>
+        </div>
+      `;
+    }).join('');
+    
+    totalPriceEl.textContent = `₱${total.toLocaleString()}`;
+    if (addBtn) addBtn.disabled = false;
+  },
+  
+  removeComponent(catId) {
+    delete this.selectedComponents[catId];
+    this.saveBuild();
+    this.renderCategories();
+    if (activeBuilderCategory === catId) {
+      this.renderComponents(catId);
+    }
+    this.updateSummary();
+    this.checkBuildCompatibility();
+    ToastSystem.trigger('Component removed from build', '🗑️');
+  },
+  
+  clearBuild() {
+    if (Object.keys(this.selectedComponents).length === 0) {
+      ToastSystem.trigger('Build is already empty', 'ℹ️');
+      return;
+    }
+    
+    // Create custom modal instead of browser confirm
+    const modal = document.createElement('div');
+    modal.className = 'custom-modal-overlay';
+    modal.innerHTML = `
+      <div class="custom-modal">
+        <div class="custom-modal-header">
+          <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+          <h5>Clear Build?</h5>
+        </div>
+        <div class="custom-modal-body">
+          <p>Are you sure you want to clear your entire build? This will remove all selected components.</p>
+        </div>
+        <div class="custom-modal-footer">
+          <button class="btn-modal-cancel" onclick="this.closest('.custom-modal-overlay').remove()">Cancel</button>
+          <button class="btn-modal-confirm" onclick="PCBuilder.confirmClearBuild(); this.closest('.custom-modal-overlay').remove();">Clear Build</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    
+    // Close on overlay click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove();
+      }
+    });
+  },
+  
+  confirmClearBuild() {
+    this.selectedComponents = {};
+    this.saveBuild();
+    this.renderCategories();
+    if (activeBuilderCategory) {
+      this.renderComponents(activeBuilderCategory);
+    }
+    this.updateSummary();
+    this.checkBuildCompatibility();
+    ToastSystem.trigger('Build cleared successfully', '🔄');
+  },
+  
+  addToCart() {
+    const components = Object.values(this.selectedComponents);
+    if (components.length === 0) return;
+    
+    components.forEach(comp => {
+      CartManager.addItem(comp.id, comp.name, comp.price, comp.emoji);
+    });
+    
+    ToastSystem.trigger(`${components.length} components added to cart!`, '🎉');
+  },
+  
+  saveBuild() {
+    localStorage.setItem('pchaven_build', JSON.stringify(this.selectedComponents));
+  },
+  
+  loadBuild() {
+    const saved = localStorage.getItem('pchaven_build');
+    if (saved) {
+      this.selectedComponents = JSON.parse(saved);
+    }
+  }
+};
 
 // Theme Control System Engine
 const ThemeEngine = {
@@ -190,9 +661,8 @@ function renderAllComponents() {
   const tabsContainer = document.getElementById('filter-tabs');
   if (tabsContainer) {
     const filterOptions = [
-      { id: 'all', label: 'All Silicon' },
-      { id: 'cat-cpu', label: 'Processors' },
-      { id: 'cat-gpu', label: 'Graphics Units' }
+      { id: 'all', label: 'All Components' },
+      ...CATEGORIES_DB.map(cat => ({ id: cat.id, label: cat.name }))
     ];
     tabsContainer.innerHTML = filterOptions.map(t => `
       <button class="filter-tab-btn ${activeCategoryFilter === t.id ? 'active' : ''}" onclick="setProductFilter('${t.id}')">
@@ -360,12 +830,21 @@ function runPromoTimer() {
 /* ============================================================
    MAIN DOM EXECUTION DOM CONTENT LOAD EVENT REGISTER
 ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // Load inventory first
+  await loadInventory();
+  
   ThemeEngine.init();
   CartManager.syncBadge();
   renderAllComponents();
   initTickerSystem();
   runPromoTimer();
+  
+  // Initialize PC Builder
+  PCBuilder.init();
+  
+  // Check user session and update UI
+  updateUserSection();
 
   window.addEventListener('scroll', () => {
     const nav = document.getElementById('mainNav');
@@ -408,3 +887,85 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('themeToggle')?.addEventListener('click', () => ThemeEngine.toggle());
 });
+
+/* ============================================================
+   USER SESSION MANAGEMENT
+============================================================ */
+function updateUserSection() {
+  const userSection = document.getElementById('userSection');
+  if (!userSection) return;
+  
+  const session = localStorage.getItem('pchaven_session');
+  
+  if (session) {
+    const user = JSON.parse(session);
+    if (user.loggedIn) {
+      // User is logged in
+      userSection.innerHTML = `
+        <div class="user-dropdown">
+          <button class="btn-user-nav" id="userMenuBtn" title="${user.name}">
+            <i class="bi bi-person-circle"></i>
+            <span class="d-none d-md-inline">${user.name.split(' ')[0]}</span>
+          </button>
+          <div class="user-dropdown-menu" id="userDropdownMenu">
+            <div class="user-dropdown-header">
+              <div class="user-avatar">${user.name.charAt(0).toUpperCase()}</div>
+              <div>
+                <div class="user-name">${user.name}</div>
+                <div class="user-email">${user.email}</div>
+              </div>
+            </div>
+            <div class="user-dropdown-divider"></div>
+            <a href="#" class="user-dropdown-item" onclick="event.preventDefault(); alert('Profile feature coming soon!')">
+              <i class="bi bi-person"></i> My Profile
+            </a>
+            <a href="#" class="user-dropdown-item" onclick="event.preventDefault(); alert('Orders feature coming soon!')">
+              <i class="bi bi-box-seam"></i> My Orders
+            </a>
+            <a href="#pc-builder" class="user-dropdown-item">
+              <i class="bi bi-pc-display"></i> My Builds
+            </a>
+            <div class="user-dropdown-divider"></div>
+            <a href="#" class="user-dropdown-item text-danger" onclick="event.preventDefault(); logoutUser()">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+          </div>
+        </div>
+      `;
+      
+      // Toggle dropdown
+      const userMenuBtn = document.getElementById('userMenuBtn');
+      const userDropdownMenu = document.getElementById('userDropdownMenu');
+      
+      userMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        userDropdownMenu.classList.toggle('show');
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', () => {
+        userDropdownMenu.classList.remove('show');
+      });
+      
+      return;
+    }
+  }
+  
+  // User is not logged in
+  userSection.innerHTML = `
+    <a href="login.html" class="btn-login-nav" title="Login">
+      <i class="bi bi-person-circle"></i>
+    </a>
+  `;
+}
+
+function logoutUser() {
+  if (confirm('Are you sure you want to logout?')) {
+    localStorage.removeItem('pchaven_session');
+    localStorage.removeItem('pchaven_remember');
+    ToastSystem.trigger('Logged out successfully', '👋');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  }
+}

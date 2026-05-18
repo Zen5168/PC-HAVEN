@@ -1,0 +1,13 @@
+{
+  "categories": [
+    { "id": "cat-cpu", "name": "Processors", "icon": "bi-cpu" },
+    { "id": "cat-gpu", "name": "Graphics Cards", "icon": "bi-gpu-card" },
+    { "id": "cat-ram", "name": "Memory (RAM)", "icon": "bi-memory" },
+    { "id": "cat-mobo", "name": "Motherboards", "icon": "bi-motherboard" },
+    { "id": "cat-storage", "name": "Storage", "icon": "bi-device-ssd" },
+    { "id": "cat-psu", "name": "Power Supply", "icon": "bi-lightning-charge" },
+    { "id": "cat-case", "name": "Cases", "icon": "bi-pc-horizontal" },
+    { "id": "cat-cooler", "name": "Cooling", "icon": "bi-water" }
+  ],
+  "products": []
+}
