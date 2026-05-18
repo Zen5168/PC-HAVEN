@@ -995,12 +995,43 @@ function updateUserSection() {
 }
 
 function logoutUser() {
-  if (confirm('Are you sure you want to logout?')) {
-    localStorage.removeItem('pchaven_session');
-    localStorage.removeItem('pchaven_remember');
-    ToastSystem.trigger('Logged out successfully', '👋');
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
-  }
+  // Create custom modal for logout confirmation
+  const modal = document.createElement('div');
+  modal.className = 'custom-modal-overlay';
+  modal.innerHTML = `
+    <div class="custom-modal">
+      <div class="custom-modal-header">
+        <i class="bi bi-box-arrow-right text-danger"></i>
+        <h5>Logout Confirmation</h5>
+      </div>
+      <div class="custom-modal-body">
+        <p>Are you sure you want to logout? You'll need to sign in again to access your account.</p>
+      </div>
+      <div class="custom-modal-footer">
+        <button class="btn-modal-cancel" onclick="this.closest('.custom-modal-overlay').remove()">
+          <i class="bi bi-x-circle"></i> Cancel
+        </button>
+        <button class="btn-modal-confirm btn-danger" onclick="confirmLogout(); this.closest('.custom-modal-overlay').remove();">
+          <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  
+  // Close on overlay click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.remove();
+    }
+  });
+}
+
+function confirmLogout() {
+  localStorage.removeItem('pchaven_session');
+  localStorage.removeItem('pchaven_remember');
+  ToastSystem.trigger('Logged out successfully', '👋');
+  setTimeout(() => {
+    window.location.reload();
+  }, 1000);
 }
