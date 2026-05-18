@@ -17,43 +17,48 @@ const EMBEDDED_INVENTORY = {
     { "id": "cat-cooler", "name": "Cooling", "icon": "bi-water" }
   ],
   "products": [
-    { "id": "cpu-1", "cat": "cat-cpu", "name": "AMD Ryzen 9 9950X", "spec": "16 Cores / 32 Threads, 5.7GHz Boost, 80MB Cache", "price": 33600, "stock": 15, "label": "Top Tier", "emoji": "🔥" },
-    { "id": "cpu-2", "cat": "cat-cpu", "name": "AMD Ryzen 7 9800X3D", "spec": "8 Cores / 16 Threads, 5.2GHz Turbo, 3D V-Cache", "price": 26824, "stock": 22, "label": "Hot Allocation", "emoji": "⚙️" },
-    { "id": "cpu-3", "cat": "cat-cpu", "name": "Intel Core Ultra 9 285K", "spec": "24 Cores / 24 Threads, AI Engine Integrated", "price": 32984, "stock": 18, "label": "New Drop", "emoji": "🧠" },
-    { "id": "cpu-4", "cat": "cat-cpu", "name": "Intel Core i9-14900K", "spec": "24 Cores / 32 Threads, 6.0GHz Turbo", "price": 30800, "stock": 20, "label": "Popular", "emoji": "⚡" },
-    { "id": "cpu-5", "cat": "cat-cpu", "name": "AMD Ryzen 5 7600X", "spec": "6 Cores / 12 Threads, 5.3GHz Boost", "price": 11200, "stock": 35, "label": "Budget King", "emoji": "💰" },
-    { "id": "gpu-1", "cat": "cat-gpu", "name": "NVIDIA RTX 5090 Founders", "spec": "32GB GDDR7, Next-Gen Ray Tracing", "price": 111944, "stock": 8, "label": "Ultimate", "emoji": "🌌" },
-    { "id": "gpu-2", "cat": "cat-gpu", "name": "ASUS ROG Strix RTX 5090 OC", "spec": "32GB GDDR7, Liquid Vapor Chamber Cooling", "price": 125440, "stock": 5, "label": "Heavy Duty", "emoji": "👑" },
-    { "id": "gpu-3", "cat": "cat-gpu", "name": "NVIDIA RTX 5070 Ti Founders", "spec": "16GB GDDR7, DLSS 4.0 Support", "price": 47544, "stock": 25, "label": "New Drop", "emoji": "⚡" },
-    { "id": "gpu-4", "cat": "cat-gpu", "name": "AMD Radeon RX 7900 XTX", "spec": "24GB GDDR6, Chiplet Architecture", "price": 44800, "stock": 18, "label": "AMD Power", "emoji": "🔴" },
-    { "id": "gpu-5", "cat": "cat-gpu", "name": "NVIDIA RTX 4070 Super", "spec": "12GB GDDR6X, Ray Tracing Cores", "price": 33600, "stock": 30, "label": "Best Value", "emoji": "💎" },
-    { "id": "gpu-6", "cat": "cat-gpu", "name": "AMD Radeon RX 7800 XT", "spec": "16GB GDDR6, 1440p Gaming Beast", "price": 28000, "stock": 22, "label": "Popular", "emoji": "🎮" },
-    { "id": "ram-1", "cat": "cat-ram", "name": "G.SKILL Trident Z5 RGB 64GB", "spec": "DDR5-7200, CL34, 2x32GB Kit", "price": 16800, "stock": 40, "label": "Premium", "emoji": "💾" },
-    { "id": "ram-2", "cat": "cat-ram", "name": "Corsair Dominator Platinum 32GB", "spec": "DDR5-6400, CL32, 2x16GB Kit", "price": 11200, "stock": 50, "label": "Popular", "emoji": "⚡" },
-    { "id": "ram-3", "cat": "cat-ram", "name": "Kingston Fury Beast 32GB", "spec": "DDR5-6000, CL36, 2x16GB Kit", "price": 8400, "stock": 60, "label": "Best Value", "emoji": "💰" },
-    { "id": "ram-4", "cat": "cat-ram", "name": "Corsair Vengeance RGB 64GB", "spec": "DDR5-5600, CL40, 2x32GB Kit", "price": 13440, "stock": 35, "label": "RGB", "emoji": "🌈" },
-    { "id": "mobo-1", "cat": "cat-mobo", "name": "ASUS ROG Maximus Z890 Hero", "spec": "Intel Z890, DDR5, PCIe 5.0, WiFi 7", "price": 33600, "stock": 12, "label": "Flagship", "emoji": "👑" },
-    { "id": "mobo-2", "cat": "cat-mobo", "name": "MSI MAG X870 Tomahawk", "spec": "AMD X870, DDR5, PCIe 5.0, WiFi 7", "price": 22400, "stock": 20, "label": "Popular", "emoji": "🎯" },
-    { "id": "mobo-3", "cat": "cat-mobo", "name": "Gigabyte B650 AORUS Elite", "spec": "AMD B650, DDR5, PCIe 4.0, WiFi 6E", "price": 11200, "stock": 30, "label": "Budget", "emoji": "💰" },
-    { "id": "mobo-4", "cat": "cat-mobo", "name": "ASRock X870E Taichi", "spec": "AMD X870E, DDR5, PCIe 5.0, 10GbE LAN", "price": 28000, "stock": 15, "label": "Premium", "emoji": "⚡" },
-    { "id": "storage-1", "cat": "cat-storage", "name": "Samsung 990 PRO 2TB", "spec": "NVMe Gen4, 7450MB/s Read, 6900MB/s Write", "price": 8960, "stock": 45, "label": "Top Rated", "emoji": "💿" },
-    { "id": "storage-2", "cat": "cat-storage", "name": "WD Black SN850X 4TB", "spec": "NVMe Gen4, 7300MB/s Read, Gaming Optimized", "price": 16800, "stock": 25, "label": "Gaming", "emoji": "🎮" },
-    { "id": "storage-3", "cat": "cat-storage", "name": "Crucial P5 Plus 1TB", "spec": "NVMe Gen4, 6600MB/s Read, 5000MB/s Write", "price": 4480, "stock": 60, "label": "Budget", "emoji": "💰" },
-    { "id": "storage-4", "cat": "cat-storage", "name": "Seagate FireCuda 530 2TB", "spec": "NVMe Gen4, 7300MB/s, Heatsink Included", "price": 11200, "stock": 30, "label": "Hot", "emoji": "🔥" },
-    { "id": "psu-1", "cat": "cat-psu", "name": "Corsair HX1500i 1500W", "spec": "80+ Platinum, Fully Modular, Digital Monitoring", "price": 22400, "stock": 10, "label": "Extreme", "emoji": "⚡" },
-    { "id": "psu-2", "cat": "cat-psu", "name": "Seasonic PRIME TX-1000", "spec": "80+ Titanium, 1000W, Fully Modular", "price": 16800, "stock": 15, "label": "Premium", "emoji": "👑" },
-    { "id": "psu-3", "cat": "cat-psu", "name": "EVGA SuperNOVA 850 G7", "spec": "80+ Gold, 850W, Fully Modular", "price": 8960, "stock": 35, "label": "Popular", "emoji": "💎" },
-    { "id": "psu-4", "cat": "cat-psu", "name": "Thermaltake Toughpower GF3 750W", "spec": "80+ Gold, 750W, Fully Modular", "price": 6720, "stock": 40, "label": "Value", "emoji": "💰" },
-    { "id": "case-1", "cat": "cat-case", "name": "Lian Li O11 Dynamic EVO", "spec": "Mid Tower, Tempered Glass, Dual Chamber", "price": 8960, "stock": 25, "label": "Popular", "emoji": "📦" },
-    { "id": "case-2", "cat": "cat-case", "name": "Fractal Design Torrent", "spec": "Mid Tower, High Airflow, 2x 180mm Fans", "price": 11200, "stock": 20, "label": "Airflow King", "emoji": "🌪️" },
-    { "id": "case-3", "cat": "cat-case", "name": "NZXT H9 Elite", "spec": "Mid Tower, Dual Chamber, Cable Management", "price": 10080, "stock": 18, "label": "Premium", "emoji": "✨" },
-    { "id": "case-4", "cat": "cat-case", "name": "Corsair 4000D Airflow", "spec": "Mid Tower, High Airflow, Budget Friendly", "price": 5600, "stock": 45, "label": "Best Value", "emoji": "💰" },
-    { "id": "case-5", "cat": "cat-case", "name": "PC HAVEN Neon Matrix Cube", "spec": "Panoramic Glass, RGB Lighting, Premium Build", "price": 8344, "stock": 30, "label": "Fresh Design", "emoji": "🎨" },
-    { "id": "cooler-1", "cat": "cat-cooler", "name": "NZXT Kraken Elite 360 RGB", "spec": "360mm AIO, LCD Display, RGB Fans", "price": 15680, "stock": 20, "label": "Premium", "emoji": "❄️" },
-    { "id": "cooler-2", "cat": "cat-cooler", "name": "Crow Flow Liquid AIO 360", "spec": "360mm, Infinity Mirror LCD, Dynamic Pumps", "price": 9464, "stock": 25, "label": "Sale", "emoji": "💧" },
-    { "id": "cooler-3", "cat": "cat-cooler", "name": "Arctic Liquid Freezer II 280", "spec": "280mm AIO, VRM Fan, Silent Operation", "price": 6720, "stock": 35, "label": "Best Value", "emoji": "🧊" },
-    { "id": "cooler-4", "cat": "cat-cooler", "name": "Noctua NH-D15 chromax.black", "spec": "Dual Tower Air Cooler, Premium Fans", "price": 6160, "stock": 40, "label": "Air Cooling", "emoji": "🌬️" },
-    { "id": "cooler-5", "cat": "cat-cooler", "name": "Corsair iCUE H150i Elite", "spec": "360mm AIO, RGB Lighting, Zero RPM Mode", "price": 11200, "stock": 22, "label": "RGB", "emoji": "🌈" }
+    { "id": "cpu-1", "cat": "cat-cpu", "name": "AMD Ryzen 9 9950X", "spec": "16 Cores / 32 Threads, 5.7GHz Boost, 80MB Cache", "price": 33600, "stock": 15, "label": "Top Tier", "emoji": "🔥", "platform": "AM5", "ramType": "DDR5", "image": "https://www.amd.com/content/dam/amd/en/images/products/processors/ryzen/2613900-ryzen-9-9950x.jpg" },
+    { "id": "cpu-2", "cat": "cat-cpu", "name": "AMD Ryzen 7 9800X3D", "spec": "8 Cores / 16 Threads, 5.2GHz Turbo, 3D V-Cache", "price": 26824, "stock": 22, "label": "Hot Allocation", "emoji": "⚙️", "platform": "AM5", "ramType": "DDR5", "image": "https://www.amd.com/content/dam/amd/en/images/products/processors/ryzen/2900400-ryzen-7-9800x3d-product.jpg" },
+    { "id": "cpu-3", "cat": "cat-cpu", "name": "Intel Core Ultra 9 285K", "spec": "24 Cores / 24 Threads, AI Engine Integrated", "price": 32984, "stock": 18, "label": "New Drop", "emoji": "🧠", "platform": "LGA1851", "ramType": "DDR5", "image": "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25666085/core_ultra_series2_k_hero_08.png?quality=90&strip=all&crop=21.875%2C0%2C56.25%2C100&w=750" },
+    { "id": "cpu-4", "cat": "cat-cpu", "name": "Intel Core i9-14900K", "spec": "24 Cores / 32 Threads, 6.0GHz Turbo", "price": 30800, "stock": 20, "label": "Popular", "emoji": "⚡", "platform": "LGA1700", "ramType": "DDR5", "image": "data:image/jpeg;base64,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" },
+    { "id": "cpu-5", "cat": "cat-cpu", "name": "AMD Ryzen 5 7600X", "spec": "6 Cores / 12 Threads, 5.3GHz Boost", "price": 11200, "stock": 35, "label": "Budget King", "emoji": "💰", "platform": "AM5", "ramType": "DDR5", "image": "https://www.amd.com/content/dam/amd/en/images/products/processors/ryzen/2505503-ryzen-5-7600x.jpg" },
+    { "id": "cpu-6", "cat": "cat-cpu", "name": "AMD Ryzen 9 5950X", "spec": "16 Cores / 32 Threads, 4.9GHz Boost, Zen 3", "price": 24640, "stock": 18, "label": "AM4 Beast", "emoji": "💪", "platform": "AM4", "ramType": "DDR4", "image": "https://www.amd.com/content/dam/amd/en/images/products/processors/ryzen/2505503-ryzen-9-5900x.jpg" },
+    { "id": "cpu-7", "cat": "cat-cpu", "name": "AMD Ryzen 7 5800X3D", "spec": "8 Cores / 16 Threads, 4.5GHz, 3D V-Cache", "price": 19600, "stock": 25, "label": "Gaming King", "emoji": "🎮", "platform": "AM4", "ramType": "DDR4", "image": "https://www.amd.com/content/dam/amd/en/images/products/processors/ryzen/2505503-ryzen-7-5800x3d.jpg" },
+    { "id": "cpu-8", "cat": "cat-cpu", "name": "AMD Ryzen 5 5600X", "spec": "6 Cores / 12 Threads, 4.6GHz Boost", "price": 8960, "stock": 40, "label": "Value AM4", "emoji": "💵", "platform": "AM4", "ramType": "DDR4", "image": "https://www.amd.com/content/dam/amd/en/images/products/processors/ryzen/2505503-ryzen-7-5800x3d.jpg" },
+    { "id": "gpu-1", "cat": "cat-gpu", "name": "NVIDIA RTX 5090 Founders", "spec": "32GB GDDR7, Next-Gen Ray Tracing", "price": 111944, "stock": 8, "label": "Ultimate", "emoji": "🌌", "image": "https://cdn.mos.cms.futurecdn.net/D2wF99DV4KRfYPYVeR3eWb-650-80.jpg.webp" },
+    { "id": "gpu-2", "cat": "cat-gpu", "name": "ASUS ROG Strix RTX 5090 OC", "spec": "32GB GDDR7, Liquid Vapor Chamber Cooling", "price": 125440, "stock": 5, "label": "Heavy Duty", "emoji": "👑", "image": "https://cdn.thefpsreview.com/wp-content/uploads/2025/01/nvidia-geforce-rtx-5090-5080-pricing-revealed-by-u-s-retailers-including-asus-rog-astral-geforce-rtx-5090-32gb-gddr7-oc-edition-for-2-799-99-feature.jpg.webp" },
+    { "id": "gpu-3", "cat": "cat-gpu", "name": "NVIDIA RTX 5070 Ti", "spec": "16GB GDDR7, DLSS 4.0 Support", "price": 47544, "stock": 25, "label": "New Drop", "emoji": "⚡", "image": "https://www.pcgamesn.com/wp-content/sites/pcgamesn/2024/11/nvidia-geforce-rtx-5070-ti-guide-550x309.jpg" },
+    { "id": "gpu-4", "cat": "cat-gpu", "name": "AMD Radeon RX 7900 XTX", "spec": "24GB GDDR6, Chiplet Architecture", "price": 44800, "stock": 18, "label": "AMD Power", "emoji": "🔴", "image": "https://global.aorus.com/upload/Admin/images/AMD%20RX%207900%20XTX.png" },
+    { "id": "gpu-5", "cat": "cat-gpu", "name": "NVIDIA RTX 4070 Super", "spec": "12GB GDDR6X, Ray Tracing Cores", "price": 33600, "stock": 30, "label": "Best Value", "emoji": "💎", "image": "https://d2vfia6k6wrouk.cloudfront.net/productimages/e7c5ce6d-d8fd-43e1-b3f1-b0f100cbb986/images/pny-rtx-4070-super-12gb-verto-dual-fan-oc-ra-logo.png" },
+    { "id": "gpu-6", "cat": "cat-gpu", "name": "AMD Radeon RX 7800 XT", "spec": "16GB GDDR6, 1440p Gaming Beast", "price": 28000, "stock": 22, "label": "Popular", "emoji": "🎮", "image": "https://dlcdnwebimgs.asus.com/files/media/f27fb00d-ab9d-48b9-b91d-e172cedadbfc/v1/img/amd/amd-1.jpg" },
+    { "id": "ram-1", "cat": "cat-ram", "name": "G.SKILL Trident Z5 RGB 64GB", "spec": "DDR5-7200, CL34, 2x32GB Kit", "price": 64050, "stock": 40, "label": "Premium", "emoji": "💾", "ramType": "DDR5", "image": "https://bermorzone.com.ph/wp-content/uploads/2024/05/gskill-trident-z5-rgb-600x375-1.webp" },
+    { "id": "ram-2", "cat": "cat-ram", "name": "Corsair Dominator Platinum 32GB", "spec": "DDR5-6400, CL32, 2x16GB Kit", "price": 26995, "stock": 50, "label": "Popular", "emoji": "⚡", "ramType": "DDR5", "image": "https://ecommerce.datablitz.com.ph/cdn/shop/products/CMT32GX5M2B5600Z36-Gallery-DOMINATOR-RGB-PLATINUM-GREY-DDR5-AMD-13_500x.png?v=1676893972" },
+    { "id": "ram-3", "cat": "cat-ram", "name": "Kingston Fury Beast 32GB", "spec": "DDR5-6000, CL36, 2x16GB Kit", "price": 24995, "stock": 60, "label": "Best Value", "emoji": "💰", "ramType": "DDR5", "image": "https://gameone.ph/media/catalog/product/mpiowebpcache/d378a0f20f83637cdb1392af8dc032a2/k/i/kingston_fury_32gb_2x16gb_kf560c40bwk2-32_ddr5_6000mts_white.webp" },
+    { "id": "ram-4", "cat": "cat-ram", "name": "Corsair Vengeance RGB 64GB", "spec": "DDR5-5600, CL40, 2x32GB Kit", "price": 57480, "stock": 35, "label": "RGB", "emoji": "🌈", "ramType": "DDR5", "image": "https://assets.corsair.com/image/upload/c_pad,q_85,h_1100,w_1100,f_auto/products/Memory/vengeance-rgb-ddr5-config/white/2up/Vengeance-RGB-DDR5-2UP-64GB-WHITE_01.webp" },
+    { "id": "ram-5", "cat": "cat-ram", "name": "G.SKILL Ripjaws V 32GB", "spec": "DDR4-3600, CL16, 2x16GB Kit", "price": 13720, "stock": 55, "label": "DDR4 Best", "emoji": "💪", "ramType": "DDR4", "image": "https://dynaquestpc.com/cdn/shop/products/1_0ea187da-227e-438b-af2d-17679c6f9cd9.png?v=1578625786&width=900" },
+    { "id": "ram-6", "cat": "cat-ram", "name": "Corsair Vengeance LPX 32GB", "spec": "DDR4-3200, CL16, 2x16GB Kit", "price": 17600, "stock": 65, "label": "Value DDR4", "emoji": "💵", "ramType": "DDR4", "image": "https://m.media-amazon.com/images/I/31Hq8-Z9oWL._SS400_.jpg" },
+    { "id": "ram-7", "cat": "cat-ram", "name": "Kingston Fury Beast 64GB", "spec": "DDR4-3600, CL18, 2x32GB Kit", "price": 33200, "stock": 40, "label": "DDR4 High Cap", "emoji": "📦", "ramType": "DDR4", "image": "https://www.disctech.com/SCASite/product_images/Kingston-DDR4-DUAL-STOCK_1000-1.jpg?resizeid=9&resizeh=650&resizew=650" },
+    { "id": "mobo-1", "cat": "cat-mobo", "name": "ASUS ROG Maximus Z890 Hero", "spec": "Intel Z890, DDR5, PCIe 5.0, WiFi 7", "price": 33600, "stock": 12, "label": "Flagship", "emoji": "👑", "platform": "LGA1851", "ramType": "DDR5", "image": "https://ecommerce.datablitz.com.ph/cdn/shop/files/xcbxccvxvc_500x.jpg?v=1740398288" },
+    { "id": "mobo-2", "cat": "cat-mobo", "name": "MSI MAG X870 Tomahawk", "spec": "AMD X870, DDR5, PCIe 5.0, WiFi 7", "price": 22400, "stock": 20, "label": "Popular", "emoji": "🎯", "platform": "AM5", "ramType": "DDR5", "image": "https://bermorzone.com.ph/wp-content/uploads/2024/06/MSI-MAG-X870-TOMAHAWK-WIFI-btz-ph-4.webp" },
+    { "id": "mobo-3", "cat": "cat-mobo", "name": "Gigabyte B650 AORUS Elite", "spec": "AMD B650, DDR5, PCIe 4.0, WiFi 6E", "price": 11200, "stock": 30, "label": "Budget", "emoji": "💰", "platform": "AM5", "ramType": "DDR5", "image": "https://static.gigabyte.com/StaticFile/Image/Global/823738252050626b84ab756539a4c3d4/Product/32158" },
+    { "id": "mobo-4", "cat": "cat-mobo", "name": "ASRock X870E Taichi", "spec": "AMD X870E, DDR5, PCIe 5.0, 10GbE LAN", "price": 28000, "stock": 15, "label": "Premium", "emoji": "⚡", "platform": "AM5", "ramType": "DDR5", "image": "https://tpucdn.com/review/asrock-x870e-taichi/images/title.jpg" },
+    { "id": "mobo-5", "cat": "cat-mobo", "name": "ASUS TUF Gaming Z790-Plus", "spec": "Intel Z790, DDR5, PCIe 5.0, WiFi 6E", "price": 16800, "stock": 25, "label": "Intel DDR5", "emoji": "🔵", "platform": "LGA1700", "ramType": "DDR5", "image": "https://dlcdnwebimgs.asus.com/gain/f0d6e51a-6240-48e3-bd5b-00fd86032561/w692" },
+    { "id": "mobo-6", "cat": "cat-mobo", "name": "MSI MAG B550 Tomahawk", "spec": "AMD B550, DDR4, PCIe 4.0, WiFi 6", "price": 9800, "stock": 28, "label": "AM4 Popular", "emoji": "🎯", "platform": "AM4", "ramType": "DDR4", "image": "https://storage-asset.msi.com/global/picture/image/feature/mb/B550/MAG/TOMAHAWK/B550-TOMAHAWK-kv-pd.png" },
+    { "id": "mobo-7", "cat": "cat-mobo", "name": "ASUS ROG Strix X570-E", "spec": "AMD X570, DDR4, PCIe 4.0, WiFi 6E", "price": 19600, "stock": 18, "label": "AM4 Premium", "emoji": "👑", "platform": "AM4", "ramType": "DDR4", "image": "https://dlcdnwebimgs.asus.com/gain/249D2FDB-BD4E-4DB4-A000-15237DAC1406/w717/h525/fwebp" },
+    { "id": "storage-1", "cat": "cat-storage", "name": "Samsung 990 PRO 2TB", "spec": "NVMe Gen4, 7450MB/s Read, 6900MB/s Write", "price": 8960, "stock": 45, "label": "Top Rated", "emoji": "💿", "image": "https://images.samsung.com/is/image/samsung/p6pim/sg/mz-v9p2t0bw/gallery/sg-990pro-nvme-m2-ssd-mz-v9p2t0bw-533720704?$1164_776_PNG$" },
+    { "id": "storage-2", "cat": "cat-storage", "name": "WD Black SN850X 4TB", "spec": "NVMe Gen4, 7300MB/s Read, Gaming Optimized", "price": 16800, "stock": 25, "label": "Gaming", "emoji": "🎮", "image": "https://www.sandisk.com/content/dam/sandisk/en-us/assets/products/internal-storage/wd-black-sn850x-nvme-ssd/gallery/wd-black-sn850x-nvme-ssd-front.png.wdthumb.1280.1280.webp" },
+    { "id": "storage-3", "cat": "cat-storage", "name": "Crucial P5 Plus 1TB", "spec": "NVMe Gen4, 6600MB/s Read, 5000MB/s Write", "price": 4480, "stock": 60, "label": "Budget", "emoji": "💰", "image": "https://cdn.mos.cms.futurecdn.net/73Fk8dL8V3eBNWD6MwNwSn-1920-80.jpg.webp" },
+    { "id": "psu-1", "cat": "cat-psu", "name": "Corsair HX1500i 1500W", "spec": "80+ Platinum, Fully Modular, Digital Monitoring", "price": 22400, "stock": 10, "label": "Extreme", "emoji": "⚡", "image": "https://assets.corsair.com/image/upload/c_pad,q_85,h_1100,w_1100,f_auto/products/Power-Supply-Units/base-hxi-2023-config/1500W/CP-9020261/Gallery/CP-9020261_17.webp" },
+    { "id": "psu-2", "cat": "cat-psu", "name": "Seasonic PRIME TX-1000", "spec": "80+ Titanium, 1000W, Fully Modular", "price": 16800, "stock": 15, "label": "Premium", "emoji": "👑", "image": "https://cdn.mos.cms.futurecdn.net/qkoaEhhDsrYvg8zyTjMuoB-1920-80.jpg.webp" },
+    { "id": "psu-3", "cat": "cat-psu", "name": "EVGA SuperNOVA 850 G7", "spec": "80+ Gold, 850W, Fully Modular", "price": 8960, "stock": 35, "label": "Popular", "emoji": "💎", "image": "https://cdn.mos.cms.futurecdn.net/c4j24LdtfV3qMRw4ta4dDc-1280-80.png.webp" },
+    { "id": "psu-4", "cat": "cat-psu", "name": "Thermaltake Toughpower GF3 750W", "spec": "80+ Gold, 750W, Fully Modular", "price": 6720, "stock": 40, "label": "Value", "emoji": "💰", "image": "https://www.thermaltake.com/media/catalog/product/cache/cc8b24283b13da6bc2ff91682c03b54b/t/o/toughpower_gf3_750_01.jpg" },
+    { "id": "case-1", "cat": "cat-case", "name": "Lian Li O11 Dynamic EVO", "spec": "Mid Tower, Tempered Glass, Dual Chamber", "price": 8960, "stock": 25, "label": "Popular", "emoji": "📦", "image": "https://lian-li.com/wp-content/uploads/2023/12/O11DERGB-000.jpg" },
+    { "id": "case-2", "cat": "cat-case", "name": "Fractal Design Torrent", "spec": "Mid Tower, High Airflow, 2x 180mm Fans", "price": 11200, "stock": 20, "label": "Airflow King", "emoji": "🌪️", "image": "https://www.fractal-design.com/app/uploads/2021/07/Torrent_Black_RGB_TGL_1-Left-Front-540x540.jpg" },
+    { "id": "case-3", "cat": "cat-case", "name": "NZXT H9 Elite", "spec": "Mid Tower, Dual Chamber, Cable Management", "price": 10080, "stock": 18, "label": "Premium", "emoji": "✨", "image": "https://ecommerce.datablitz.com.ph/cdn/shop/products/1672294506-h9-flow-hero-black_500x.jpg?v=1676921009" },
+    { "id": "case-4", "cat": "cat-case", "name": "Corsair 4000D Airflow", "spec": "Mid Tower, High Airflow, Budget Friendly", "price": 5600, "stock": 45, "label": "Best Value", "emoji": "💰", "image": "https://assets.corsair.com/image/upload/c_pad,q_85,h_1100,w_1100,f_auto/products/Cases/base-4000d-airflow-config/Gallery/4000D_AF_BLACK_19.webp" },
+    { "id": "cooler-1", "cat": "cat-cooler", "name": "Arctic Liquid Freezer II 360 A-RGB", "spec": "360mm, Infinity Mirror LCD, Dynamic Pumps", "price": 9464, "stock": 25, "label": "Sale", "emoji": "💧", "image": "https://ecommerce.datablitz.com.ph/cdn/shop/files/Layer12_a298ee09-3d64-4a6c-87c8-e315a2f0d809_500x.jpg?v=1740735506" },
+    { "id": "cooler-2", "cat": "cat-cooler", "name": "Arctic Liquid Freezer II 280", "spec": "280mm AIO, VRM Fan, Silent Operation", "price": 6720, "stock": 35, "label": "Best Value", "emoji": "🧊", "image": "https://ecommerce.datablitz.com.ph/cdn/shop/files/liquid-freezer-ii-280-argb-g06_500x.jpg?v=1740746399" },
+    { "id": "cooler-3", "cat": "cat-cooler", "name": "Noctua NH-D15 chromax.black", "spec": "Dual Tower Air Cooler, Premium Fans", "price": 6160, "stock": 40, "label": "Air Cooling", "emoji": "🌬️", "image": "https://www.noctua.at/_next/image?url=https%3A%2F%2Fcdn.noctua.at%2Fmedia%2Fnh_d15_chromax_black_2.png&w=640&q=75" },
   ]
 };
 
@@ -163,7 +168,7 @@ const PCBuilder = {
             <div class="builder-component-card ${isSelected ? 'selected' : ''} ${p.stock === 0 ? 'out-of-stock' : ''} ${hasWarning ? 'has-warning' : ''}" 
                  onclick="PCBuilder.selectComponent('${catId}', '${p.id}')">
               <div class="d-flex justify-content-between align-items-start mb-2">
-                <div class="component-emoji">${p.emoji}</div>
+                ${p.image ? `<img src="${p.image}" alt="${p.name}" class="component-image" />` : `<div class="component-emoji">${p.emoji}</div>`}
                 <div class="d-flex gap-1">
                   ${hasWarning ? '<i class="bi bi-exclamation-triangle-fill text-warning" title="Compatibility warning"></i>' : ''}
                   ${isSelected ? '<i class="bi bi-check-circle-fill text-success"></i>' : ''}
@@ -189,34 +194,51 @@ const PCBuilder = {
     const mobo = this.selectedComponents['cat-mobo'];
     const gpu = this.selectedComponents['cat-gpu'];
     const psu = this.selectedComponents['cat-psu'];
+    const ram = this.selectedComponents['cat-ram'];
     const cooler = this.selectedComponents['cat-cooler'];
     const caseItem = this.selectedComponents['cat-case'];
     
-    // Check motherboard compatibility with CPU
+    // Check motherboard compatibility with CPU (Platform matching)
     if (catId === 'cat-mobo' && cpu) {
-      const isAMD = cpu.name.includes('AMD') || cpu.name.includes('Ryzen');
-      const isIntel = cpu.name.includes('Intel') || cpu.name.includes('Core');
-      const moboAMD = product.name.includes('X870') || product.name.includes('B650') || product.name.includes('X870E');
-      const moboIntel = product.name.includes('Z890') || product.name.includes('Z790');
+      const cpuPlatform = cpu.platform || '';
+      const moboPlatform = product.platform || '';
       
-      if (isAMD && moboIntel) {
-        warnings.push('Incompatible: AMD CPU needs AMD motherboard');
-      } else if (isIntel && moboAMD) {
-        warnings.push('Incompatible: Intel CPU needs Intel motherboard');
+      if (cpuPlatform && moboPlatform && cpuPlatform !== moboPlatform) {
+        warnings.push(`Incompatible: ${cpuPlatform} CPU needs ${cpuPlatform} motherboard`);
       }
     }
     
-    // Check CPU compatibility with motherboard
+    // Check CPU compatibility with motherboard (Platform matching)
     if (catId === 'cat-cpu' && mobo) {
-      const isAMD = product.name.includes('AMD') || product.name.includes('Ryzen');
-      const isIntel = product.name.includes('Intel') || product.name.includes('Core');
-      const moboAMD = mobo.name.includes('X870') || mobo.name.includes('B650') || mobo.name.includes('X870E');
-      const moboIntel = mobo.name.includes('Z890') || mobo.name.includes('Z790');
+      const cpuPlatform = product.platform || '';
+      const moboPlatform = mobo.platform || '';
       
-      if (isAMD && moboIntel) {
-        warnings.push('Incompatible: AMD CPU needs AMD motherboard');
-      } else if (isIntel && moboAMD) {
-        warnings.push('Incompatible: Intel CPU needs Intel motherboard');
+      if (cpuPlatform && moboPlatform && cpuPlatform !== moboPlatform) {
+        warnings.push(`Incompatible: ${cpuPlatform} CPU needs ${cpuPlatform} motherboard`);
+      }
+    }
+    
+    // Check RAM compatibility with CPU/Motherboard
+    if (catId === 'cat-ram' && (cpu || mobo)) {
+      const ramType = product.ramType || '';
+      const cpuRamType = cpu?.ramType || '';
+      const moboRamType = mobo?.ramType || '';
+      
+      if (cpuRamType && ramType && cpuRamType !== ramType) {
+        warnings.push(`Incompatible: CPU requires ${cpuRamType}, this is ${ramType}`);
+      }
+      if (moboRamType && ramType && moboRamType !== ramType) {
+        warnings.push(`Incompatible: Motherboard requires ${moboRamType}, this is ${ramType}`);
+      }
+    }
+    
+    // Check CPU/Motherboard compatibility with RAM
+    if ((catId === 'cat-cpu' || catId === 'cat-mobo') && ram) {
+      const ramType = ram.ramType || '';
+      const componentRamType = product.ramType || '';
+      
+      if (ramType && componentRamType && ramType !== componentRamType) {
+        warnings.push(`Incompatible: Selected RAM is ${ramType}, this requires ${componentRamType}`);
       }
     }
     
@@ -683,7 +705,7 @@ function renderAllComponents() {
           <div class="product-card">
             <div class="product-img-wrap">
               <div class="badge-stack"><span class="badge-sale">${p.label}</span></div>
-              <div class="item-emoji">${p.emoji}</div>
+              ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-image" />` : `<div class="item-emoji">${p.emoji}</div>`}
             </div>
             <div class="product-body">
               <div class="product-category">Inventory Token ID: ${p.id}</div>
