@@ -921,6 +921,39 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (cartOverlay) cartOverlay.addEventListener('click', closeCartAction);
 
   document.getElementById('themeToggle')?.addEventListener('click', () => ThemeEngine.toggle());
+  document.getElementById('themeToggleMobile')?.addEventListener('click', () => ThemeEngine.toggle());
+  
+  // Mobile Menu Functionality
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+  const mobileMenuClose = document.getElementById('mobileMenuClose');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+  
+  function openMobileMenu() {
+    hamburgerBtn?.classList.add('active');
+    mobileMenu?.classList.add('active');
+    mobileMenuOverlay?.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeMobileMenu() {
+    hamburgerBtn?.classList.remove('active');
+    mobileMenu?.classList.remove('active');
+    mobileMenuOverlay?.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  hamburgerBtn?.addEventListener('click', openMobileMenu);
+  mobileMenuClose?.addEventListener('click', closeMobileMenu);
+  mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
+  
+  // Close menu when clicking nav links
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      closeMobileMenu();
+    });
+  });
 });
 
 /* ============================================================
@@ -928,6 +961,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 ============================================================ */
 function updateUserSection() {
   const userSection = document.getElementById('userSection');
+  const mobileUserSection = document.getElementById('mobileUserSection');
   if (!userSection) return;
   
   const session = localStorage.getItem('pchaven_session');
@@ -935,9 +969,9 @@ function updateUserSection() {
   if (session) {
     const user = JSON.parse(session);
     if (user.loggedIn) {
-      // User is logged in
+      // Desktop User Dropdown
       userSection.innerHTML = `
-        <div class="user-dropdown">
+        <div class="user-dropdown d-none d-lg-block">
           <button class="btn-user-nav" id="userMenuBtn" title="${user.name}">
             <i class="bi bi-person-circle"></i>
             <span class="d-none d-md-inline">${user.name.split(' ')[0]}</span>
@@ -968,11 +1002,39 @@ function updateUserSection() {
         </div>
       `;
       
-      // Toggle dropdown
+      // Mobile User Section
+      if (mobileUserSection) {
+        mobileUserSection.innerHTML = `
+          <div class="mobile-user-card">
+            <div class="mobile-user-avatar">${user.name.charAt(0).toUpperCase()}</div>
+            <div class="mobile-user-info">
+              <div class="mobile-user-name">${user.name}</div>
+              <div class="mobile-user-email">${user.email}</div>
+            </div>
+          </div>
+          <div class="mobile-menu-section">
+            <h4>Account</h4>
+            <a href="#" class="mobile-nav-link" onclick="event.preventDefault(); alert('Profile feature coming soon!')">
+              <i class="bi bi-person"></i> My Profile
+            </a>
+            <a href="#" class="mobile-nav-link" onclick="event.preventDefault(); alert('Orders feature coming soon!')">
+              <i class="bi bi-box-seam"></i> My Orders
+            </a>
+            <a href="#pc-builder" class="mobile-nav-link">
+              <i class="bi bi-pc-display"></i> My Builds
+            </a>
+            <a href="#" class="mobile-nav-link text-danger" onclick="event.preventDefault(); logoutUser()">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+          </div>
+        `;
+      }
+      
+      // Toggle desktop dropdown
       const userMenuBtn = document.getElementById('userMenuBtn');
       const userDropdownMenu = document.getElementById('userDropdownMenu');
       
-      userMenuBtn.addEventListener('click', (e) => {
+      userMenuBtn?.addEventListener('click', (e) => {
         e.stopPropagation();
         userDropdownMenu.classList.toggle('show');
       });

@@ -41,7 +41,7 @@
           <input type="text" placeholder="Search setups, parts..." />
         </div>
 
-        <button class="theme-toggle" id="themeToggle" title="Toggle Light/Dark Mode">
+        <button class="theme-toggle d-none d-lg-flex" id="themeToggle" title="Toggle Light/Dark Mode">
           <i class="bi bi-moon-stars-fill"></i>
         </button>
 
@@ -53,9 +53,62 @@
           <i class="bi bi-cpu-fill"></i> Cart
           <span class="cart-count" id="cartCountBadge">0</span>
         </button>
+
+        <!-- Hamburger Menu Button (Mobile/Tablet) -->
+        <button class="hamburger-menu d-lg-none" id="hamburgerBtn" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
   </nav>
+
+  <!-- Mobile Slide-in Menu -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <h3>Menu</h3>
+      <button class="mobile-menu-close" id="mobileMenuClose">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    
+    <div class="mobile-menu-content">
+      <!-- User Section (populated by JavaScript) -->
+      <div id="mobileUserSection"></div>
+
+      <!-- Theme Toggle -->
+      <div class="mobile-menu-item">
+        <span class="mobile-menu-label">
+          <i class="bi bi-palette"></i> Theme
+        </span>
+        <button class="theme-toggle-mobile" id="themeToggleMobile">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="mobile-menu-section">
+        <h4>Navigation</h4>
+        <a href="#hero" class="mobile-nav-link">
+          <i class="bi bi-house-door"></i> Home
+        </a>
+        <a href="#categories" class="mobile-nav-link">
+          <i class="bi bi-shop"></i> Shop
+        </a>
+        <a href="#pc-builder" class="mobile-nav-link">
+          <i class="bi bi-pc-display"></i> PC Builder
+        </a>
+        <a href="#services" class="mobile-nav-link">
+          <i class="bi bi-tools"></i> Tech Services
+        </a>
+        <a href="#promo" class="mobile-nav-link">
+          <i class="bi bi-tag"></i> Deals
+        </a>
+      </div>
+    </div>
+  </div>
 
   <header id="hero" class="hero-section">
     <div class="hero-bg"></div>

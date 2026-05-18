@@ -282,27 +282,36 @@
     }
     
     .theme-toggle-login {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
       color: var(--text-secondary);
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all var(--transition);
-      z-index: 10;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     
     .theme-toggle-login:hover {
       border-color: var(--accent);
       color: var(--accent);
       background: var(--accent-glow);
+    }
+    
+    .theme-toggle-login:active {
+      transform: scale(0.95);
     }
     
     .alert-message {
@@ -388,6 +397,10 @@
       justify-content: center;
       transition: all var(--transition);
       border-radius: 4px;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     
     .password-toggle:hover {
@@ -402,6 +415,7 @@
     @media (max-width: 768px) {
       .auth-card {
         flex-direction: column;
+        margin: 1rem;
       }
       
       .auth-sidebar,
@@ -415,6 +429,20 @@
       
       .auth-sidebar h2 {
         font-size: 1.8rem;
+      }
+      
+      .login-container {
+        padding: 1rem 0.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .auth-main {
+        padding: 2rem 1.5rem;
+      }
+      
+      .auth-card {
+        margin: 0.5rem;
       }
     }
   </style>
