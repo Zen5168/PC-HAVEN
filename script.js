@@ -831,6 +831,19 @@ function runPromoTimer() {
    MAIN DOM EXECUTION DOM CONTENT LOAD EVENT REGISTER
 ============================================================ */
 document.addEventListener('DOMContentLoaded', async () => {
+  // Check if user is logged in, redirect to login if not
+  const session = localStorage.getItem('pchaven_session');
+  if (!session) {
+    window.location.href = 'index.html';
+    return;
+  }
+  
+  const user = JSON.parse(session);
+  if (!user.loggedIn) {
+    window.location.href = 'index.html';
+    return;
+  }
+  
   // Load inventory first
   await loadInventory();
   
@@ -953,7 +966,7 @@ function updateUserSection() {
   
   // User is not logged in
   userSection.innerHTML = `
-    <a href="login.html" class="btn-login-nav" title="Login">
+    <a href="index.html" class="btn-login-nav" title="Login">
       <i class="bi bi-person-circle"></i>
     </a>
   `;

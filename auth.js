@@ -240,7 +240,7 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
   
   // Redirect to main page after 1 second
   setTimeout(() => {
-    window.location.href = 'index.html';
+    window.location.href = 'home.html';
   }, 1000);
 });
 
@@ -257,7 +257,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const user = JSON.parse(session);
     if (user.loggedIn) {
       // User is already logged in, redirect to main page
-      window.location.href = 'index.html';
+      window.location.href = 'home.html';
     }
   }
 });
