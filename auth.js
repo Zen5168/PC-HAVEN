@@ -141,6 +141,12 @@ document.getElementById('registerForm').addEventListener('submit', (e) => {
     return;
   }
   
+  // Check if email ends with @gmail.com
+  if (!email.toLowerCase().endsWith('@gmail.com')) {
+    showAlert('Please use a Gmail address (@gmail.com)', 'error');
+    return;
+  }
+  
   if (password.length < 6) {
     showAlert('Password must be at least 6 characters long', 'error');
     return;
@@ -172,7 +178,18 @@ document.getElementById('registerForm').addEventListener('submit', (e) => {
   users.push(newUser);
   saveUsers(users);
   
-  showAlert('Account created successfully! Please login.', 'success');
+  // Create session for auto-login
+  const session = {
+    userId: newUser.id,
+    name: newUser.name,
+    email: newUser.email,
+    loggedIn: true,
+    loginTime: new Date().toISOString()
+  };
+  
+  localStorage.setItem('pchaven_session', JSON.stringify(session));
+  
+  showAlert(`Welcome, ${newUser.name}! Account created successfully!`, 'success');
   
   // Clear form
   document.getElementById('registerForm').reset();
@@ -180,11 +197,10 @@ document.getElementById('registerForm').addEventListener('submit', (e) => {
   strengthText.textContent = 'Password strength';
   strengthText.className = 'text-muted';
   
-  // Switch to login tab after 2 seconds
+  // Redirect to main page after 1.5 seconds
   setTimeout(() => {
-    switchTab('login');
-    document.getElementById('loginEmail').value = email;
-  }, 2000);
+    window.location.href = 'home.html';
+  }, 1500);
 });
 
 // Login form handler

@@ -99,8 +99,8 @@ const TRUST_DB = [
 ];
 
 const TESTIMONIALS_DB = [
-  { text: "PC HAVEN field technicians updated my thermal throttling workstations within hours. Incredible client response.", author: "Marcus V.", role: "Lead Dev Operations" },
-  { text: "Secured my RTX 5090 drop allocation completely hassle-free. The separated front-end system tracking is blazing fast.", author: "Sarah K.", role: "Digital Render Engineer" }
+  { text: "PC HAVEN field technicians updated my thermal throttling workstations within hours. Incredible client response.", author: "Del Coro D.", role: "Lead Dev Operations" },
+  { text: "Secured my RTX 5090 drop allocation completely hassle-free. The separated front-end system tracking is blazing fast.", author: "Talotalo K.", role: "Digital Render Engineer" }
 ];
 
 /* ============================================================
