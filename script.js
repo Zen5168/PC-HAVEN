@@ -586,6 +586,27 @@ const CartManager = {
     this.saveItems(cart);
     ToastSystem.trigger('Component profile expunged from memory', '🗑️');
   },
+  incrementItem(id) {
+    let cart = this.getItems();
+    const item = cart.find(i => i.id === id);
+    if (item) {
+      item.qty += 1;
+      this.saveItems(cart);
+    }
+  },
+  decrementItem(id) {
+    let cart = this.getItems();
+    const item = cart.find(i => i.id === id);
+    if (item) {
+      if (item.qty > 1) {
+        item.qty -= 1;
+        this.saveItems(cart);
+      } else {
+        // If quantity is 1, remove the item entirely
+        this.removeItem(id);
+      }
+    }
+  },
   syncBadge() {
     const cart = this.getItems();
     const totalQty = cart.reduce((acc, current) => acc + current.qty, 0);
@@ -618,11 +639,22 @@ const CartManager = {
         <div class="cart-item">
           <div class="cart-item-info">
             <span class="cart-item-name">${item.emoji} ${item.name}</span>
-            <span class="cart-item-price">₱${item.price.toLocaleString()} <span class="text-muted small">x${item.qty}</span></span>
+            <span class="cart-item-price">₱${(item.price * item.qty).toLocaleString()}</span>
           </div>
-          <button class="cart-remove-btn" onclick="CartManager.removeItem('${item.id}')" title="Remove Item">
-            <i class="bi bi-trash3-fill"></i>
-          </button>
+          <div class="cart-item-controls">
+            <div class="qty-controls">
+              <button class="qty-btn qty-minus" onclick="CartManager.decrementItem('${item.id}')" title="Decrease quantity">
+                <i class="bi bi-dash"></i>
+              </button>
+              <span class="qty-display">${item.qty}</span>
+              <button class="qty-btn qty-plus" onclick="CartManager.incrementItem('${item.id}')" title="Increase quantity">
+                <i class="bi bi-plus"></i>
+              </button>
+            </div>
+            <button class="cart-remove-btn" onclick="CartManager.removeItem('${item.id}')" title="Remove Item">
+              <i class="bi bi-trash3-fill"></i>
+            </button>
+          </div>
         </div>
       `;
     });
@@ -632,13 +664,74 @@ const CartManager = {
   checkout() {
     const cart = this.getItems();
     if (cart.length === 0) {
-      ToastSystem.trigger('Cart node clear. Add components first.', '⚠️');
+      ToastSystem.trigger('Cart is empty. Add components first.', '⚠️');
       return;
     }
-    alert('PC HAVEN Front-End Simulator: Purchase sequence initialized. Clearing local state matrix.');
+    
+    // Calculate total
+    const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    
+    // Create order object
+    const order = {
+      id: 'ORD-' + Date.now(),
+      date: new Date().toISOString(),
+      items: cart,
+      total: total,
+      status: 'Processing'
+    };
+    
+    // Save order to user's orders
+    const session = localStorage.getItem('pchaven_session');
+    if (session) {
+      const user = JSON.parse(session);
+      const users = JSON.parse(localStorage.getItem('pchaven_users') || '[]');
+      const userIndex = users.findIndex(u => u.id === user.userId);
+      
+      if (userIndex !== -1) {
+        if (!users[userIndex].orders) {
+          users[userIndex].orders = [];
+        }
+        users[userIndex].orders.unshift(order);
+        localStorage.setItem('pchaven_users', JSON.stringify(users));
+      }
+    }
+    
+    // Show success modal
+    const modal = document.createElement('div');
+    modal.className = 'custom-modal-overlay';
+    modal.innerHTML = `
+      <div class="custom-modal">
+        <div class="custom-modal-header">
+          <i class="bi bi-check-circle-fill text-success"></i>
+          <h5>Order Placed Successfully!</h5>
+        </div>
+        <div class="custom-modal-body">
+          <p><strong>Order ID:</strong> ${order.id}</p>
+          <p><strong>Total:</strong> ₱${total.toLocaleString()}</p>
+          <p>Your order has been placed and is being processed. You can view your order details in "My Orders".</p>
+        </div>
+        <div class="custom-modal-footer">
+          <button class="btn-modal-confirm" onclick="this.closest('.custom-modal-overlay').remove();">
+            <i class="bi bi-check-lg"></i> Got it!
+          </button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    
+    // Close modal on overlay click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove();
+      }
+    });
+    
+    // Clear cart
     this.saveItems([]);
     document.getElementById('cartDrawer').classList.remove('open');
     document.getElementById('cartOverlay').classList.remove('open');
+    
+    ToastSystem.trigger('Order placed successfully!', '✅');
   }
 };
 
@@ -988,7 +1081,7 @@ function updateUserSection() {
             <a href="#" class="user-dropdown-item" onclick="event.preventDefault(); alert('Profile feature coming soon!')">
               <i class="bi bi-person"></i> My Profile
             </a>
-            <a href="#" class="user-dropdown-item" onclick="event.preventDefault(); alert('Orders feature coming soon!')">
+            <a href="#" class="user-dropdown-item" onclick="event.preventDefault(); showMyOrders()">
               <i class="bi bi-box-seam"></i> My Orders
             </a>
             <a href="#pc-builder" class="user-dropdown-item">
@@ -1020,7 +1113,7 @@ function updateUserSection() {
             <a href="#" class="mobile-nav-link" onclick="event.preventDefault(); alert('Profile feature coming soon!')">
               <i class="bi bi-person"></i> My Profile
             </a>
-            <a href="#" class="mobile-nav-link" onclick="event.preventDefault(); alert('Orders feature coming soon!')">
+            <a href="#" class="mobile-nav-link" onclick="event.preventDefault(); showMyOrders()">
               <i class="bi bi-box-seam"></i> My Orders
             </a>
             <a href="#pc-builder" class="mobile-nav-link">
@@ -1100,3 +1193,170 @@ function confirmLogout() {
     window.location.reload();
   }, 1000);
 }
+
+
+/* ============================================================
+   MY ORDERS FEATURE
+============================================================ */
+function showMyOrders() {
+  const session = localStorage.getItem('pchaven_session');
+  if (!session) {
+    ToastSystem.trigger('Please login to view orders', '⚠️');
+    return;
+  }
+  
+  const user = JSON.parse(session);
+  const users = JSON.parse(localStorage.getItem('pchaven_users') || '[]');
+  const currentUser = users.find(u => u.id === user.userId);
+  
+  const orders = currentUser?.orders || [];
+  
+  // Create orders modal
+  const modal = document.createElement('div');
+  modal.className = 'custom-modal-overlay';
+  modal.innerHTML = `
+    <div class="custom-modal orders-modal">
+      <div class="custom-modal-header">
+        <h5><i class="bi bi-box-seam"></i> My Orders</h5>
+      </div>
+      <div class="custom-modal-body">
+        ${orders.length === 0 ? `
+          <div class="orders-empty">
+            <i class="bi bi-inbox"></i>
+            <p>No orders yet. Start shopping to see your orders here!</p>
+          </div>
+        ` : `
+          <div class="orders-list">
+            ${orders.map((order, index) => `
+              <div class="order-card" data-order-index="${index}">
+                <div class="order-header">
+                  <h6>${order.id}</h6>
+                  <span class="order-status ${order.status === 'Cancelled' ? 'status-cancelled' : ''}">
+                    <i class="bi ${order.status === 'Cancelled' ? 'bi-x-circle' : 'bi-clock-history'}"></i> ${order.status}
+                  </span>
+                </div>
+                <div class="order-date">
+                  <i class="bi bi-calendar3"></i>
+                  ${new Date(order.date).toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </div>
+                <div class="order-items">
+                  ${order.items.map(item => `
+                    <div class="order-item">
+                      <span class="order-item-name">${item.name}</span>
+                      <span class="order-item-qty">x${item.qty}</span>
+                      <span class="order-item-price">₱${(item.price * item.qty).toLocaleString()}</span>
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="order-total">
+                  <span class="order-total-label">Total:</span>
+                  <span class="order-total-amount">₱${order.total.toLocaleString()}</span>
+                </div>
+                ${order.status !== 'Cancelled' && order.status !== 'Delivered' ? `
+                  <div class="order-actions">
+                    <button class="btn-cancel-order" onclick="cancelOrder('${order.id}')">
+                      <i class="bi bi-x-circle"></i> Cancel Order
+                    </button>
+                  </div>
+                ` : ''}
+              </div>
+            `).join('')}
+          </div>
+        `}
+      </div>
+      <div class="custom-modal-footer">
+        <button class="btn-modal-confirm" onclick="this.closest('.custom-modal-overlay').remove()">
+          <i class="bi bi-check-lg"></i> Close
+        </button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  
+  // Close on overlay click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.remove();
+    }
+  });
+}
+
+function cancelOrder(orderId) {
+  // Show confirmation modal
+  const confirmModal = document.createElement('div');
+  confirmModal.className = 'custom-modal-overlay';
+  confirmModal.innerHTML = `
+    <div class="custom-modal">
+      <div class="custom-modal-header">
+        <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+        <h5>Cancel Order</h5>
+      </div>
+      <div class="custom-modal-body">
+        <p>Are you sure you want to cancel order <strong>${orderId}</strong>?</p>
+        <p class="text-muted small">This action cannot be undone.</p>
+      </div>
+      <div class="custom-modal-footer">
+        <button class="btn-modal-cancel" onclick="this.closest('.custom-modal-overlay').remove()">
+          <i class="bi bi-x-circle"></i> No, Keep Order
+        </button>
+        <button class="btn-modal-confirm btn-danger" onclick="confirmCancelOrder('${orderId}'); this.closest('.custom-modal-overlay').remove();">
+          <i class="bi bi-trash3"></i> Yes, Cancel Order
+        </button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(confirmModal);
+  
+  // Close on overlay click
+  confirmModal.addEventListener('click', (e) => {
+    if (e.target === confirmModal) {
+      confirmModal.remove();
+    }
+  });
+}
+
+function confirmCancelOrder(orderId) {
+  const session = localStorage.getItem('pchaven_session');
+  if (!session) {
+    ToastSystem.trigger('Session expired. Please login again.', '⚠️');
+    return;
+  }
+  
+  const user = JSON.parse(session);
+  const users = JSON.parse(localStorage.getItem('pchaven_users') || '[]');
+  const userIndex = users.findIndex(u => u.id === user.userId);
+  
+  if (userIndex !== -1 && users[userIndex].orders) {
+    const orderIndex = users[userIndex].orders.findIndex(o => o.id === orderId);
+    
+    if (orderIndex !== -1) {
+      // Update order status to Cancelled
+      users[userIndex].orders[orderIndex].status = 'Cancelled';
+      users[userIndex].orders[orderIndex].cancelledDate = new Date().toISOString();
+      
+      // Save to localStorage
+      localStorage.setItem('pchaven_users', JSON.stringify(users));
+      
+      // Show success message
+      ToastSystem.trigger('Order cancelled successfully', '✅');
+      
+      // Close the orders modal and reopen it to show updated status
+      const ordersModal = document.querySelector('.orders-modal');
+      if (ordersModal) {
+        ordersModal.closest('.custom-modal-overlay').remove();
+      }
+      
+      // Reopen orders modal with updated data
+      setTimeout(() => {
+        showMyOrders();
+      }, 300);
+    }
+  }
+}
+
